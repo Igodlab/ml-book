@@ -1,8 +1,13 @@
 # Notes on :: Probabilistic Machine Learning : Advanced Topics
-Personal notes on [Probabilistic ML: Advanced Topics](https://probml.github.io/pml-book/book2.html) by Kevin P. Murphy. 
-Summary is written as short bullet points w/ relevant equations in a `*.ipynb` markdown.
+
 ---
-### Table of Contents
+
+Personal notes on [Probabilistic ML: Advanced Topics](https://probml.github.io/pml-book/book2.html) by Kevin P. Murphy. 
+
+Summary is written as short bullet points w/ relevant equations in a `*.ipynb` markdown.
+
+---
+## Table of Contents
 <!-- toc -->
 
 - [I Fundamentals](#i-fundamentals)

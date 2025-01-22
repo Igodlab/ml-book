@@ -1,4 +1,6 @@
-*.pdf
+# igonre all .* files except .gitignore
+.*
+book2-probml.pdf
 .ipynb_checkpoints
 
 test.py
