@@ -1,19 +1,16 @@
-$\newcommand{\bs}[1]{\boldsymbol{#1}}$
-$\renewcommand{\vec}[1]{\bs{#1}}$
-
 # 2 Probability
 
 WIP $\ldots$
 
 ## 2.5 Transformations of random variables
 
-- We want to go from $\vec{x}\sim p_x(\vec{x})$ to $\vec{y}\sim p_y(\vec{y})$ where $f(\vec{x})=\vec{y}$ is deterministic.
+- We want to go from $\boldsymbol{x}\sim p_x(\boldsymbol{x})$ to $\boldsymbol{y}\sim p_y(\boldsymbol{y})$ where $f(\boldsymbol{x})=\boldsymbol{y}$ is deterministic.
 
 
 ### 2.5.1 Invertible transformations (bijections)
-- We can achieve the variable transformation using the determinant of the **Jacobian** of the inverse $f^{-1}$ and $f$ should be a bijection (aka surjective and injective, so it goes from $\mathbb{R}^n\rightarrow\mathbb{R}^n$, $f$ has a well defined inverse): $p_y(\vec{y}) = p_x(\vec{x}) \left|\det[\mathbf{J}_{f^{-1}}(\vec{y})]\right|$
+- We can achieve the variable transformation using the determinant of the **Jacobian** of the inverse $f^{-1}$ and $f$ should be a bijection (aka surjective and injective, so it goes from $\mathbb{R}^n\rightarrow\mathbb{R}^n$, $f$ has a well defined inverse): $p_y(\boldsymbol{y}) = p_x(\boldsymbol{x}) \left|\det[\mathbf{J}_{f^{-1}}(\boldsymbol{y})]\right|$
     - where: $\mathbf{J}_{f^{-1}}(y)=\left[\begin{array}{lll}
-\frac{\partial \vec{x}}{\partial y_1} & \cdots & \frac{\partial \vec{x}}{\partial y_n}
+\frac{\partial \boldsymbol{x}}{\partial y_1} & \cdots & \frac{\partial \boldsymbol{x}}{\partial y_n}
 \end{array}\right]=\left[\begin{array}{c}
 \nabla^{\mathrm{T}} x_1 \\
 \vdots \\
@@ -27,7 +24,7 @@ WIP $\ldots$
 <img src="images/ch0247-injective-surjective.png" width="45%">
 
 ### 2.5.2 Monte Carlo Approximation
-- It is often expensive to compute the Jacobian mat so we use Monte Carlo: based on samples $\vec{x}^s\sim p(\vec{x})$ compute $\vec{y}^s\sim f(\vec{x}^s)$ and then construct an empirical pdf $p(\vec{y})$ 
+- It is often expensive to compute the Jacobian mat so we use Monte Carlo: based on samples $\boldsymbol{x}^s\sim p(\boldsymbol{x})$ compute $\boldsymbol{y}^s\sim f(\boldsymbol{x}^s)$ and then construct an empirical pdf $p(\boldsymbol{y})$ 
 
 ### 2.5.3 Probability Integral Transform (PIT)
 - Basically is a transformation of any pdf to a uniform dist (uses cdf), it is useful because we can define unbiased samples 
@@ -55,11 +52,11 @@ $p(x_{1:T}) = p(x_1) \prod_{t=2}^{T} p(x_t | x_{t-1})$
     
 #### 2.6.1.3 Higher-order Markov chains
 - We can generalize the last case to higher dimensions ie. a model of order w/ memory length $n$, called **Markov model of order n / n-gram model**:
-    - $p(\vec{x}_{1:T}) = p(\vec{x}_{1:n}) \prod_{t=n+1}^T p( \vec{x}_t | \vec{x}_{t-n:t-1})$
-    - If $n=1$ this is called a **bigram model** (because we need to represent pairs of chars $p(\vec{x}_t\mid\vec{x}_{t-1})$), $n=2$ is trigram (we need to represent triplets $p(\vec{x}_t\mid\vec{x}_{t-1},\vec{x}_{t-2})$), and so on …
+    - $p(\boldsymbol{x}_{1:T}) = p(\boldsymbol{x}_{1:n}) \prod_{t=n+1}^T p( \boldsymbol{x}_t | \boldsymbol{x}_{t-n:t-1})$
+    - If $n=1$ this is called a **bigram model** (because we need to represent pairs of chars $p(\boldsymbol{x}_t\mid\boldsymbol{x}_{t-1})$), $n=2$ is trigram (we need to represent triplets $p(\boldsymbol{x}_t\mid\boldsymbol{x}_{t-1},\boldsymbol{x}_{t-2})$), and so on …
 - A powerful property is that we can always convert higher-order models to first-order by defining an augmented state space
-    - eg. for an $n=2$ bigram model, we can define: $\tilde{\vec{x}}_t=(\vec{x}_{t-1},\vec{x}_t)$
-    - and then use: $p(\tilde{\vec{x}}_{1:T})=p(\tilde{\vec{x}}_2)\prod_{t=3}^T p(\tilde{\vec{x}}_t\mid\tilde{\vec{x}}_{t-1})$
+    - eg. for an $n=2$ bigram model, we can define: $\tilde{\boldsymbol{x}}_t=(\boldsymbol{x}_{t-1},\boldsymbol{x}_t)$
+    - and then use: $p(\tilde{\boldsymbol{x}}_{1:T})=p(\tilde{\boldsymbol{x}}_2)\prod_{t=3}^T p(\tilde{\boldsymbol{x}}_t\mid\tilde{\boldsymbol{x}}_{t-1})$
 - Because of the above property we'll focus on first-order models in the following sections
     
 ### 2.6.2 Application: language modeling
@@ -74,9 +71,9 @@ sequences given inputs, such as mapping one language to another, or an image to 
 - The main idea behind MLE is to find the parameter values that maximize the likelihood of observing the given data from a probability function
 - Since Markov models have previous states as parameters then its transition matrix contains all the useful info. So MLE is used to estimate the transition states
 - Remember that this is basically maximizing the log prob
-    - eg. for order 1: $p(x_{1:T}|\vec{\theta}) = \pi(x_1)A(x_1,x_2)\ldots A(x_{T-1},x_T)$ (notation in Markov models: $\pi(x)=p(x)$)
-    - This can be  written w/ prods $\prod$ (eq.2.275) and then generalized to $\mathcal{D}=(\vec{x}_1,\ldots,\vec{x}_N)$ where the chain $\vec{x}_i$ is $\vec{x}_i=(x_{i1},\ldots,x_{iN})$ 
-    - After taking the log and defining counts we arrive to eq.2.276: $\log p(\mathcal{D}|\vec\theta) = \sum_{i=1}^N\log(p(\vec{x_i}|\vec{\theta}))=\sum_jN^1_j\log\pi_j+\sum_j\sum_kN_{jk}\log A_{jk}$ 
+    - eg. for order 1: $p(x_{1:T}|\boldsymbol{\theta}) = \pi(x_1)A(x_1,x_2)\ldots A(x_{T-1},x_T)$ (notation in Markov models: $\pi(x)=p(x)$)
+    - This can be  written w/ prods $\prod$ (eq.2.275) and then generalized to $\mathcal{D}=(\boldsymbol{x}_1,\ldots,\boldsymbol{x}_N)$ where the chain $\boldsymbol{x}_i$ is $\boldsymbol{x}_i=(x_{i1},\ldots,x_{iN})$ 
+    - After taking the log and defining counts we arrive to eq.2.276: $\log p(\mathcal{D}|\boldsymbol\theta) = \sum_{i=1}^N\log(p(\boldsymbol{x_i}|\boldsymbol{\theta}))=\sum_jN^1_j\log\pi_j+\sum_j\sum_kN_{jk}\log A_{jk}$ 
         - $N_j^1$: represents the number of transition states where state $j$ is the starting state
         - $N_{jk}$: number of transition states from $j$ to $k$ (**bigram statistics**)
         - $N_j$: number of times state $j$ is involved in a state transition (**unigram statistics**)
@@ -99,18 +96,18 @@ sequences given inputs, such as mapping one language to another, or an image to 
 #### 2.6.4.1 What is a stationary distribution?
 - The stationary distribution has the interpretation of the limiting distribution when the chain is irreducible and aperiodic
 - The formulation is as follows: 
-    - the **stationary / equilibrium distribution** case is when (eg in the 1-step transition-mat case) $\vec{\pi}_t = \vec{\pi}_{t-1}\mathbf{A}$ reaches $\vec{\pi} = \vec{\pi}\mathbf{A}$ after some iterations, regardless of the initial state dist (eg. prob of being in state $j$ at time $t$ $\pi_t(j)=p(X_t=j)=\sum_{i}\pi_{t-1}A_{ij}$)
+    - the **stationary / equilibrium distribution** case is when (eg in the 1-step transition-mat case) $\boldsymbol{\pi}_t = \boldsymbol{\pi}_{t-1}\mathbf{A}$ reaches $\boldsymbol{\pi} = \boldsymbol{\pi}\mathbf{A}$ after some iterations, regardless of the initial state dist (eg. prob of being in state $j$ at time $t$ $\pi_t(j)=p(X_t=j)=\sum_{i}\pi_{t-1}A_{ij}$)
     - In general we have the **global balance equations** $\pi_i\sum_{j\neq i}A_{ij} = \sum_{j\neq i}\pi_jA_{ji}$, subject to normalized marginal probs ($=\sum_j\pi_j=1$), so the prob of being in state $i$ times the net flow out of state $i$ must equal the probability of being in each other state $j$ times the net flow from that state into $i$
     
 #### 2.6.4.2 Computing the stationary distribution
-- The whole thing above is similar to solving an eigenvalue problem $\mathbf{A}^T\vec{v}=\vec{v}$, where we need to set $\vec{v}^T=\vec{\pi}$ 
-    - $\vec{v}$ is an eigenvector w/ eigenval = 1, it exists because $\mathbf{A}$ is a row-stochastic-mat ($\mathbf{A1}=\mathbf{1}$) and eigenvalues for $\vec{A}, \vec{A}^T$ are the same
+- The whole thing above is similar to solving an eigenvalue problem $\mathbf{A}^T\boldsymbol{v}=\boldsymbol{v}$, where we need to set $\boldsymbol{v}^T=\boldsymbol{\pi}$ 
+    - $\boldsymbol{v}$ is an eigenvector w/ eigenval = 1, it exists because $\mathbf{A}$ is a row-stochastic-mat ($\mathbf{A1}=\mathbf{1}$) and eigenvalues for $\boldsymbol{A}, \boldsymbol{A}^T$ are the same
 - However we have a few caveats
     - can't handle transition probs equal to 1 or 0, because eigenvectors are only guaranteed to be real-valued if all entries are $A_{ij} > 0$ (and hence $A_{ij} < 1$)
     - a trick is to generalize the eigenvalue problem using the constrains 
-        - $K$ constraints in $\vec{\pi}(\mathbf{I}-\mathbf{A})=\mathbf{0}_{K\times 1}$
-        - 1 constraint in $\vec{\pi}\mathbf{1}_{K\times 1}=1$
-    - now we need to compute $\vec{\pi}\mathbf{M}=\vec{r}$ (where $\mathbf{M}=[\mathbf{I}-\mathbf{A}, \mathbf{1}]$, $\vec{r}=[0,\ldots,0,1]$) then drop the last column of $\mathbf{I}-\mathbf{A}$ and the last zero of $\vec{r}$ to fix the unscontraint-problem given the size of $M$ being $K\times (K+1)$
+        - $K$ constraints in $\boldsymbol{\pi}(\mathbf{I}-\mathbf{A})=\mathbf{0}_{K\times 1}$
+        - 1 constraint in $\boldsymbol{\pi}\mathbf{1}_{K\times 1}=1$
+    - now we need to compute $\boldsymbol{\pi}\mathbf{M}=\boldsymbol{r}$ (where $\mathbf{M}=[\mathbf{I}-\mathbf{A}, \mathbf{1}]$, $\boldsymbol{r}=[0,\ldots,0,1]$) then drop the last column of $\mathbf{I}-\mathbf{A}$ and the last zero of $\boldsymbol{r}$ to fix the unscontraint-problem given the size of $M$ being $K\times (K+1)$
 - Unfortunately not all chains have stationary dists
 
 #### 2.6.4.3 When does a stationary distribution exists
@@ -128,31 +125,31 @@ sequences given inputs, such as mapping one language to another, or an image to 
 balance equations wrt distribution $\pi$, then $\pi$ is a stationary distribution of the chain.
 
 ## 2.7 Divergence measures between probability distributions
-- We'll discuss ways to compare two prob dists $P, Q$ defined on the same space $\{\vec{x}_1, \ldots, \vec{x}_N\}\sim P$ and $\{\vec{\tilde{x}}_1, \ldots, \vec{\tilde{x}}_M\}\sim Q$
+- We'll discuss ways to compare two prob dists $P, Q$ defined on the same space $\{\boldsymbol{x}_1, \ldots, \boldsymbol{x}_N\}\sim P$ and $\{\boldsymbol{\tilde{x}}_1, \ldots, \boldsymbol{\tilde{x}}_M\}\sim Q$
 - Determining if the samples come from the same dist is called **two-sample test**, our metric of dissimilarity is the *divergence metric* $D(P,Q)$. We can also use this to assess the *goodness of a fit*, taking one dist as the empirical one and the other as the produced by the model
 - In general these metrics are based either on $P-Q$ or $P/Q$ as we can see in sections 2.7.1.1 to 2.7.1.4
 
 <img src="images/ch02734-divergences.png" width="45%">
 
 ### 2.7.1 $f$-divergence
-- compares density ratios: $D_f(P||Q) = \int q(\vec{x}) f\left(\frac{p(\vec{x})}{q(\vec{x})}\right)dx$
+- compares density ratios: $D_f(P||Q) = \int q(\boldsymbol{x}) f\left(\frac{p(\boldsymbol{x})}{q(\boldsymbol{x})}\right)dx$
 #### 2.7.1.1 KL-divergence 
-- (eq.2.888) uses the form $f(r)=r\log r$: $D_{\mathbb{KL}}(p ||q) = \int p(\vec{x}) \log{\frac{p(\vec{x})}{q(\vec{x})}} dx$
+- (eq.2.888) uses the form $f(r)=r\log r$: $D_{\mathbb{KL}}(p ||q) = \int p(\boldsymbol{x}) \log{\frac{p(\boldsymbol{x})}{q(\boldsymbol{x})}} dx$
 
 #### 2.7.1.2 Alpha divergence
 - (eq.2.290)
 
 #### 2.7.1.3 Hellinger divergence
-- (eq.2.291): $D_{H}^2 (p || q) = 1 - \int \sqrt{p(\vec{x})^{1/2} - q(\vec{x})^{1/2}}d\vec{x}$
+- (eq.2.291): $D_{H}^2 (p || q) = 1 - \int \sqrt{p(\boldsymbol{x})^{1/2} - q(\boldsymbol{x})^{1/2}}d\boldsymbol{x}$
 
 #### 2.7.1.4 Chi-sqaured $\chi^2$ divergence
-- (eq.2.293): $\chi^2(p, q) = \frac{1}{2}\int \frac{(p(\vec{x}) - q(\vec{x}))^2}{q(\vec{x})}dx$
+- (eq.2.293): $\chi^2(p, q) = \frac{1}{2}\int \frac{(p(\boldsymbol{x}) - q(\boldsymbol{x}))^2}{q(\boldsymbol{x})}dx$
 
 
 
 ### 2.7.2 Integral probability metrics (IMP)
 - **Integral Prob Metric (IPM)** compares density differences. It is defined as the supremum of a certain $\mathcal{F}$ (called generating class of functions) and are a set of functions $f$ that satisfy certain properties (Lipschitz continuous, bounded)
-$D_{\mathcal{F}}(P, Q) \triangleq \sup _{f \in \mathcal{F}}\left|\mathbb{E}_{p(\vec{x})}[f(\vec{x})]- \mathbb{E}_{q\left(\vec{x}^{\prime}\right)}\left[f\left(\vec{x}^{\prime}\right)\right]\right|$
+$D_{\mathcal{F}}(P, Q) \triangleq \sup _{f \in \mathcal{F}}\left|\mathbb{E}_{p(\boldsymbol{x})}[f(\boldsymbol{x})]- \mathbb{E}_{q\left(\boldsymbol{x}^{\prime}\right)}\left[f\left(\boldsymbol{x}^{\prime}\right)\right]\right|$
 - the choice of $f\in\mathcal{F}$ depends on the application, eg. kernel mean embedding as we'll see in (Sec.2.7.3.1) 
 
 ### 2.7.3 Maximum mean discrepancy (MMD)
@@ -161,36 +158,36 @@ $D_{\mathcal{F}}(P, Q) \triangleq \sup _{f \in \mathcal{F}}\left|\mathbb{E}_{p(\
 #### 2.7.3.1 MMD as IPM
 - More details of IMP (sec.2.7.2):
     - the *kernel function* $f$ is an embedding of the distribution as a vector in the **Reproducing Kernel Hilbert Space (RKHS)** that represents the distribution ($f\in\mathcal{F}$ is RKHS) 
-    - the *reproducing kernel function* $\phi(\vec{x})$ ensures that $f(\vec{x})$ is RKHS at every point in $f(\vec{x}) = \langle f, \phi(\vec{x}) \rangle_{\mathcal{F}} = \sum_l f_l\phi_l(\vec{x})$
+    - the *reproducing kernel function* $\phi(\boldsymbol{x})$ ensures that $f(\boldsymbol{x})$ is RKHS at every point in $f(\boldsymbol{x}) = \langle f, \phi(\boldsymbol{x}) \rangle_{\mathcal{F}} = \sum_l f_l\phi_l(\boldsymbol{x})$
 - The MMD is an IPM witht a specific choice of function calss $\mathcal{F}$ as a RKHS in
-    - where the kernel mean embedding is defined as the expected value of $\phi(\vec{x})$ evaluated at the distribution
+    - where the kernel mean embedding is defined as the expected value of $\phi(\boldsymbol{x})$ evaluated at the distribution
     - a consequence of this choice is that can we represent functions in a *Hilbert Space* set (infinite sum of basis functions) 
-    - we arrive to the **kernel mean embedding** form (eq.2.301): $\operatorname{MMD}(P, Q ; \mathcal{F})=\sup _{\|f\| \leq 1}\left\langle f, \vec{\mu}_P-\vec{\mu}_Q\right\rangle_{\mathcal{F}}=\frac{\vec{\mu}_P-\vec{\mu}_Q}{\left\|\vec{\mu}_P-\vec{\mu}_Q\right\|}$
+    - we arrive to the **kernel mean embedding** form (eq.2.301): $\operatorname{MMD}(P, Q ; \mathcal{F})=\sup _{\|f\| \leq 1}\left\langle f, \boldsymbol{\mu}_P-\boldsymbol{\mu}_Q\right\rangle_{\mathcal{F}}=\frac{\boldsymbol{\mu}_P-\boldsymbol{\mu}_Q}{\left\|\boldsymbol{\mu}_P-\boldsymbol{\mu}_Q\right\|}$
 
 #### 2.7.3.2 Computing the MMD using the kernel trick
-- for the two sets of samples $\mathcal{X}=\left\{\vec{x}_n\right\}_{n=1}^N$ ($\vec{x}_n\sim P$) and $\mathcal{X^\prime}=\left\{\vec{x^\prime}_m\right\}_{m=1}^M$ ($\vec{x^\prime}_m\sim Q$)
-- assume $\vec{\mu}_P=\frac{1}{N}\sum_n^N\phi(\vec{x_n})$ and $\vec{\mu}_Q=\frac{1}{M}\sum_n^M\phi(\vec{x}^\prime_m)$
-- the kernel trick is that any positive kernel function can be represented as an infinite sum of kernel eigenvalues $\lambda_i$ and eigenfuncitons $\phi_i$ so: $\mathcal{K}(\vec{x},\vec{x}^\prime)=\sum_i\lambda_i\phi_i(\vec{x})\phi_i(\vec{x^\prime})$
+- for the two sets of samples $\mathcal{X}=\left\{\boldsymbol{x}_n\right\}_{n=1}^N$ ($\boldsymbol{x}_n\sim P$) and $\mathcal{X^\prime}=\left\{\boldsymbol{x^\prime}_m\right\}_{m=1}^M$ ($\boldsymbol{x^\prime}_m\sim Q$)
+- assume $\boldsymbol{\mu}_P=\frac{1}{N}\sum_n^N\phi(\boldsymbol{x_n})$ and $\boldsymbol{\mu}_Q=\frac{1}{M}\sum_n^M\phi(\boldsymbol{x}^\prime_m)$
+- the kernel trick is that any positive kernel function can be represented as an infinite sum of kernel eigenvalues $\lambda_i$ and eigenfuncitons $\phi_i$ so: $\mathcal{K}(\boldsymbol{x},\boldsymbol{x}^\prime)=\sum_i\lambda_i\phi_i(\boldsymbol{x})\phi_i(\boldsymbol{x^\prime})$
 - using this we obtain a squared MMD$^2$ (eq.304)
 
 #### 2.7.3.3 Linear time computation
 - MMD takes $O(N^2)$ time to compute
 - great alternative is the **Unormalized Mean Embedding (UME)** [[Chw+15](https://proceedings.neurips.cc/paper/2015/file/b571ecea16a9824023ee1af16897a582-Paper.pdf)] that takes only $O(N)$.
-    - the idea is that evaluating a set of locations $\{ \vec{v}_j \}_j^J$ is enough to detect the difference between $P$ and $Q$
-    - $\operatorname{UME}^2(P,Q)=\frac{1}{N}\sum_j\left[\vec{\mu}_P(\vec{v}_j) - \vec{\mu}_Q(\vec{v}_j)\right]^2$
-    - where $\vec{\mu}_P(\vec{v})=\mathbb{E}_{p(x)}[\mathcal{K}(\vec{x},\vec{v})]$
+    - the idea is that evaluating a set of locations $\{ \boldsymbol{v}_j \}_j^J$ is enough to detect the difference between $P$ and $Q$
+    - $\operatorname{UME}^2(P,Q)=\frac{1}{N}\sum_j\left[\boldsymbol{\mu}_P(\boldsymbol{v}_j) - \boldsymbol{\mu}_Q(\boldsymbol{v}_j)\right]^2$
+    - where $\boldsymbol{\mu}_P(\boldsymbol{v})=\mathbb{E}_{p(x)}[\mathcal{K}(\boldsymbol{x},\boldsymbol{v})]$
 - The normalized version of UME is the NME and by maximizing it wrt the locations $v_j$ , we can maximize the statistical power of the test, and find locations where $P$ and $Q$ differ the most.
 
 #### 2.7.3.4 Choosing the right kernel
-- The effectiveness of MMD, and UME, depends on the choice of the kernel. For example a *Gaussian kernel* $\mathcal{K}_\sigma(\vec{x},\vec{x}^\prime)=\exp\left(\frac{1}{2\vec{\sigma}^2}\left\| \vec{x}-\vec{x}^\prime \right\|^2\right)$
-- Moreover, the MMD is differentiable wrt the kernel parameters, so we can choose the optimal $\vec{\sigma}^2$ so as to maximize the power of the test
+- The effectiveness of MMD, and UME, depends on the choice of the kernel. For example a *Gaussian kernel* $\mathcal{K}_\sigma(\boldsymbol{x},\boldsymbol{x}^\prime)=\exp\left(\frac{1}{2\boldsymbol{\sigma}^2}\left\| \boldsymbol{x}-\boldsymbol{x}^\prime \right\|^2\right)$
+- Moreover, the MMD is differentiable wrt the kernel parameters, so we can choose the optimal $\boldsymbol{\sigma}^2$ so as to maximize the power of the test
     - [[Sut+17](https://arxiv.org/pdf/1611.04488.pdf%EF%BC%89)]
     - bayesian version of the above [[Fla+16](https://arxiv.org/pdf/1603.02160)]
     
     
 ### 2.7.4 Total variation distance (TV)
 - TV is the only divergence that is both $f-$divergence and IPM. 
-- It uses a kernel function of the form $f(r)=|r-1|/2$: $D_{TV}(p, q) =\frac{1}{2}\|\vec{p} - \vec{q} \|_1 = \frac{1}{2}\int |p(\vec{x}) - q(\vec{x})| d\vec{x}$
+- It uses a kernel function of the form $f(r)=|r-1|/2$: $D_{TV}(p, q) =\frac{1}{2}\|\boldsymbol{p} - \boldsymbol{q} \|_1 = \frac{1}{2}\int |p(\boldsymbol{x}) - q(\boldsymbol{x})| d\boldsymbol{x}$
 
 ### 2.7.5 Density ratio estimation (DRE) using binary classifiers
 - In binary classification problems, DRE is a trick of fitting a binary classifier in either the $f-$divergence or IPM and then minimizing the risk for a loss function

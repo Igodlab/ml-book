@@ -1,20 +1,17 @@
-$\newcommand{\bs}[1]{\boldsymbol{#1}}$
-$\renewcommand{\vec}[1]{\bs{#1}}$
-
 # 3 Statistics
 
 ## 3.1 Introduction
-- Probability theory (Chapter 2) is all about modeling a distribution over observed data outcomes $\mathcal{D}$ (knowing the parameters $\vec{\theta}$) by computing $p(\mathcal{D}| \vec{\theta})$
-- Statistics is the inverse problem. We want to compute $p(\vec{\theta}| \mathcal{D})$ (so we want to infer the parameters $\vec{\theta}$) given observations. There are two approaches:
+- Probability theory (Chapter 2) is all about modeling a distribution over observed data outcomes $\mathcal{D}$ (knowing the parameters $\boldsymbol{\theta}$) by computing $p(\mathcal{D}| \boldsymbol{\theta})$
+- Statistics is the inverse problem. We want to compute $p(\boldsymbol{\theta}| \mathcal{D})$ (so we want to infer the parameters $\boldsymbol{\theta}$) given observations. There are two approaches:
     - **Frequentist**
     - **Bayesian** ($\leftarrow$ this is king)
 
 ## 3.2 Bayesian statistics
-- Observed data $\mathcal{D}$ is known and fixed, parameters are unknown $\vec{\theta}$ (this is the opposite than frequentist approach (Sec3.3))
-- We represent our beliefs about the parameters after seing data as a **posterior distribution** (eq.3.1): $p(\vec{\theta} \mid  \mathcal{D}) = \frac{p(\vec{\theta})p(\mathcal{D} \mid \vec{\theta})}{p(\mathcal{D})} = \frac{p(\vec{\theta})p(\mathcal{D} \mid \vec{\theta})}{\int p(\vec{\theta}^\prime)p(\mathcal{D} \mid \vec{\theta}^\prime)d\vec{\theta}^\prime}$
-    - **posterior dist**:  $p(\vec{\theta} \mid  \mathcal{D})$
-    - **prior dist**: $p(\vec{\theta})$
-    - **likelihood**: $p(\mathcal{D} \mid \vec{\theta})$
+- Observed data $\mathcal{D}$ is known and fixed, parameters are unknown $\boldsymbol{\theta}$ (this is the opposite than frequentist approach (Sec3.3))
+- We represent our beliefs about the parameters after seing data as a **posterior distribution** (eq.3.1): $p(\boldsymbol{\theta} \mid  \mathcal{D}) = \frac{p(\boldsymbol{\theta})p(\mathcal{D} \mid \boldsymbol{\theta})}{p(\mathcal{D})} = \frac{p(\boldsymbol{\theta})p(\mathcal{D} \mid \boldsymbol{\theta})}{\int p(\boldsymbol{\theta}^\prime)p(\mathcal{D} \mid \boldsymbol{\theta}^\prime)d\boldsymbol{\theta}^\prime}$
+    - **posterior dist**:  $p(\boldsymbol{\theta} \mid  \mathcal{D})$
+    - **prior dist**: $p(\boldsymbol{\theta})$
+    - **likelihood**: $p(\mathcal{D} \mid \boldsymbol{\theta})$
     - **marginal dist**: $p(\mathcal{D})$
     
 ### 3.2.1 Tossing coins
@@ -26,12 +23,12 @@ $\renewcommand{\vec}[1]{\bs{#1}}$
 - In a simple coin toss, data is iid, and thus the **sufficient statistics** are $(N_1, N_0=N-N_1)$ in:
 $p(\mathcal{D}\mid{\theta}) = \prod_n^N\theta^{y_n}(1-\theta)^{1-y_n}=\theta^{N_1}(1-\theta)^{N_0}$
     - $y_n$ is the outcome heads/tails at toss number $n$
-    - *note that sufficient statistics $\neq\vec{\theta}$, sufficient stats refer to the quantities that capture enough info about the data to be able to estimate the parameters
-- simple coint toss likelihood can also be computed using a *Binomial dist*: $p(\mathcal{D}\mid\vec{\theta})=\operatorname{Bin}(y \mid N, \theta)$
+    - *note that sufficient statistics $\neq\boldsymbol{\theta}$, sufficient stats refer to the quantities that capture enough info about the data to be able to estimate the parameters
+- simple coint toss likelihood can also be computed using a *Binomial dist*: $p(\mathcal{D}\mid\boldsymbol{\theta})=\operatorname{Bin}(y \mid N, \theta)$
 
 #### 3.2.1.2 Prior
 - We can write an **uninformative prior** using a *uniform dist*, but the *beta dist* is more general: $p(\theta)=\operatorname{Beta}(\theta \mid \breve{\alpha},\breve{\beta}) \propto \theta^{\breve\alpha-1}(1-\theta)^{\breve\beta-1}$ 
-    - $\breve{\alpha},\breve{\beta}$ are **hyperparameters** (params of the prior that determine our belief about $\vec{\theta}$), if $\breve{\alpha}=\breve{\beta}=1$ we recover the uniform dist
+    - $\breve{\alpha},\breve{\beta}$ are **hyperparameters** (params of the prior that determine our belief about $\boldsymbol{\theta}$), if $\breve{\alpha}=\breve{\beta}=1$ we recover the uniform dist
 
 
 #### 3.2.1.3 Posterior
@@ -66,22 +63,22 @@ $p(\mathcal{D}\mid{\theta}) = \prod_n^N\theta^{y_n}(1-\theta)^{1-y_n}=\theta^{N_
 
 #### 3.2.1.8 Posterior predictive distribution
 - We want to predict a future observation, to achieve this we can
-    - use Bayesian inference to obtain the posterior dist of the model parameters $p(\vec{\theta} \mid \mathcal{D})$ 
-    - define the likelihood of observing a new data point $\vec{y}$ given $\vec{\theta}$: $p(\vec{y} \mid \vec{\theta})$
-    - then we use the **posterior predictive dist**, which marginalizes OUT all the unkown params:     $p(\vec{y} \mid \mathcal{D})=\int \text{rv-dist}\times\text{param-post} \;d\vec{\theta} = \int p(\vec{y} \mid \vec{\theta})p(\vec{\theta} \mid \mathcal{D})d\vec{\theta}$
+    - use Bayesian inference to obtain the posterior dist of the model parameters $p(\boldsymbol{\theta} \mid \mathcal{D})$ 
+    - define the likelihood of observing a new data point $\boldsymbol{y}$ given $\boldsymbol{\theta}$: $p(\boldsymbol{y} \mid \boldsymbol{\theta})$
+    - then we use the **posterior predictive dist**, which marginalizes OUT all the unkown params:     $p(\boldsymbol{y} \mid \mathcal{D})=\int \text{rv-dist}\times\text{param-post} \;d\boldsymbol{\theta} = \int p(\boldsymbol{y} \mid \boldsymbol{\theta})p(\boldsymbol{\theta} \mid \mathcal{D})d\boldsymbol{\theta}$
     
-- `frequentist` where the most common approximation is **plug-in approx**: $p(\vec{y} \mid \mathcal{D})\approx p(\vec{y}\mid\vec{\hat\theta})$, basically plugging in a point estimate of params $\hat\theta=\delta(\mathcal{D})$ eg. MLE, MAP : 
-    - $\delta(\theta-\hat\theta)\approx p(\vec{\theta} \mid \mathcal{D})$, which **shifts** $\rightarrow$ $p(\vec{y} \mid \mathcal{D})=\int p(\vec{y} \mid \vec{\theta})\delta(\theta-\hat\theta)d\vec{\theta} = p(\vec{y} \mid \vec{\hat\theta})$
+- `frequentist` where the most common approximation is **plug-in approx**: $p(\boldsymbol{y} \mid \mathcal{D})\approx p(\boldsymbol{y}\mid\boldsymbol{\hat\theta})$, basically plugging in a point estimate of params $\hat\theta=\delta(\mathcal{D})$ eg. MLE, MAP : 
+    - $\delta(\theta-\hat\theta)\approx p(\boldsymbol{\theta} \mid \mathcal{D})$, which **shifts** $\rightarrow$ $p(\boldsymbol{y} \mid \mathcal{D})=\int p(\boldsymbol{y} \mid \boldsymbol{\theta})\delta(\theta-\hat\theta)d\boldsymbol{\theta} = p(\boldsymbol{y} \mid \boldsymbol{\hat\theta})$
     - A problem with plug-in approximation is overfitting and is weak against fat tails!
-- `bayesian` Alternatively we can instead marginalize over all the values for each parameter $\vec{\theta}=(\ldots,\theta,\ldots)$, to compute the exact posterior predictive:
+- `bayesian` Alternatively we can instead marginalize over all the values for each parameter $\boldsymbol{\theta}=(\ldots,\theta,\ldots)$, to compute the exact posterior predictive:
     - $p(y=1 \mid \mathcal{D})=\int_0^1p(y=1 \mid \theta)p(\theta \mid \mathcal{D})d\theta$
         - if beta posterior: $p(y=1 \mid \theta)=\int_0^1\theta\operatorname{Beta}(\theta \mid \hat\alpha, \hat\beta)d\theta = \hat\alpha / \hat{N}$
     - this Bayesian approach of marginalizing accounts for uncertainty
         - if prior is Beta then a.k.a. **Laplace's rule of succession**
 
 #### 3.2.1.9 Marginal likelihood
-- The **marginal likelihood** for a model $\mathcal{M}$ is: $p(\mathcal{D} \mid \mathcal{M})=\int p(\mathcal{D} \mid \vec{\theta},\mathcal{M})p(\vec{\theta} \mid \mathcal{M}) d\vec{\theta} $
-    - We can ignore this, when performing inference of params, because is constant wrt $\vec{\theta}$
+- The **marginal likelihood** for a model $\mathcal{M}$ is: $p(\mathcal{D} \mid \mathcal{M})=\int p(\mathcal{D} \mid \boldsymbol{\theta},\mathcal{M})p(\boldsymbol{\theta} \mid \mathcal{M}) d\boldsymbol{\theta} $
+    - We can ignore this, when performing inference of params, because is constant wrt $\boldsymbol{\theta}$
     - However, is extremly important for 
         - empirical Bayes, estimating hyperparams from data (Sec.3.7)
         - choosing models (Sec.3.8.1)
@@ -89,8 +86,8 @@ $p(\mathcal{D}\mid{\theta}) = \prod_n^N\theta^{y_n}(1-\theta)^{1-y_n}=\theta^{N_
 
 ### 3.2.2 Modeling more complex data
 - In ML we can predict more complex phenomena than Bernoulli coin-tosses (Sec.3.2.1)
-- We can predict outcomes $\vec{y}$ given input features $\vec{x}$ so now we have conditional prob dists of the form: $p(\vec{y}\mid \vec{x}, \vec{\theta})$ (basis of Generalized Linear models (Sec.15) and Neural Nets (Chapter.16) )
-- A key quantity is the **posterior predictive dist**: $p(\vec{y}\mid \vec{x}, \mathcal{D}) = \int p(\vec{y}\mid \vec{x}, \vec{\theta}) p(\vec{\theta}\mid\mathcal{D}) d\vec{\theta}$
+- We can predict outcomes $\boldsymbol{y}$ given input features $\boldsymbol{x}$ so now we have conditional prob dists of the form: $p(\boldsymbol{y}\mid \boldsymbol{x}, \boldsymbol{\theta})$ (basis of Generalized Linear models (Sec.15) and Neural Nets (Chapter.16) )
+- A key quantity is the **posterior predictive dist**: $p(\boldsymbol{y}\mid \boldsymbol{x}, \mathcal{D}) = \int p(\boldsymbol{y}\mid \boldsymbol{x}, \boldsymbol{\theta}) p(\boldsymbol{\theta}\mid\mathcal{D}) d\boldsymbol{\theta}$
     - `Frequentist` approach $\rightarrow$ *plug-in approximation* + MLE / MAP, has the downside that is sensitive to overfitting and fat-tails. Because it estimates a constant uncertainty ($\hat\sigma$) for all predictions
         - The nature of uncertainty can be decomposed in **aleatoric/stochastic** (intrinsic, can't be reduced) & **epistemic** uncertainty (can be reduced)
     - Heart of `Bayesian` approach is $\rightarrow$ integrating/marginalizing OUT unkown parameters, effectively computing weighted averages of predictions and reducing uncertainty (variable uncertainty as opposed to the frequentist approach)
@@ -109,10 +106,10 @@ $p(\mathcal{D}\mid{\theta}) = \prod_n^N\theta^{y_n}(1-\theta)^{1-y_n}=\theta^{N_
 - Computing posteriors / predictives is expensive in Bayesian approach. Full discussion about this in (Part-II) and a good historical manuscript is [[MFR20](https://arxiv.org/pdf/2004.06425)]
 
 ### 3.2.5 Exchangeability and de Finetti's Theorem
-- De Finetti's Theorem is a result of the philosophical question: where do priors come from? Priors $p(\vec{\theta})$ are abstract, non-directly measurable quantities. 
+- De Finetti's Theorem is a result of the philosophical question: where do priors come from? Priors $p(\boldsymbol{\theta})$ are abstract, non-directly measurable quantities. 
     - De Finetti formalized the concept of **Infinetly exchangeable** sequence of rand vars (which is more general than iid): the joint prob of a sequence of rvs is invariant under permutation of indices
-    - *Theorem 3.2.1 (de Finetti’s theorem).* A sequence of iid rvs $(\vec{x}_1, \ldots, \vec{x}_n)$ is infinitely exchangeable iff, for all $n$ $\Rightarrow$ a param $\vec{\theta}$, a likelihood $p(\vec{x}_i\mid\vec{\theta})$ & a prior $p(\vec{\theta})$ EXISTS: 
-        - $p(\vec{x}_1, \ldots, \vec{x}_n) = \int \prod_{i=1}^n p(\vec{x}_i\mid\vec{\theta})p(\vec{\theta})d\vec{\theta}$
+    - *Theorem 3.2.1 (de Finetti’s theorem).* A sequence of iid rvs $(\boldsymbol{x}_1, \ldots, \boldsymbol{x}_n)$ is infinitely exchangeable iff, for all $n$ $\Rightarrow$ a param $\boldsymbol{\theta}$, a likelihood $p(\boldsymbol{x}_i\mid\boldsymbol{\theta})$ & a prior $p(\boldsymbol{\theta})$ EXISTS: 
+        - $p(\boldsymbol{x}_1, \ldots, \boldsymbol{x}_n) = \int \prod_{i=1}^n p(\boldsymbol{x}_i\mid\boldsymbol{\theta})p(\boldsymbol{\theta})d\boldsymbol{\theta}$
 
 
 ## 3.3 Frequentist statistics
@@ -125,19 +122,19 @@ $p(\mathcal{D}\mid{\theta}) = \prod_n^N\theta^{y_n}(1-\theta)^{1-y_n}=\theta^{N_
 
 ### 3.3.1 Sampling distributions
 - In frequestist stats the uncerainty is not represented by a posterior dist of a rv, but rather by the **sampling dist** of an estimator
-    - the dist of $\vec{\hat\theta}$ viewed as a rv can be obtained by applying the estimator multiple times to many $S $ samples $\tilde{\mathcal{D}}^{(s)}\sim\vec{\theta}^\ast$ (generated by some true model $p(\vec{x}\mid\vec{\theta}^\ast)$ and each of size $N$)
-    - then we get a set of estimates $\{\hat{\vec{\theta}}(\mathcal{D}^{(s)})\}$ that in the limmit of $S\rightarrow\infty$: $p\left(\hat{\Theta}(\tilde{\mathcal{D}})=\vec{\theta}\mid\tilde{\mathcal{D}}\sim\vec{\theta}^\ast\right) \approx \frac{1}{S}\sum_{s=1}^S\delta\left(\vec{\theta} - \Theta\left(\tilde{\mathcal{D}}^{(s)}\right) \right)$
+    - the dist of $\boldsymbol{\hat\theta}$ viewed as a rv can be obtained by applying the estimator multiple times to many $S $ samples $\tilde{\mathcal{D}}^{(s)}\sim\boldsymbol{\theta}^\ast$ (generated by some true model $p(\boldsymbol{x}\mid\boldsymbol{\theta}^\ast)$ and each of size $N$)
+    - then we get a set of estimates $\{\hat{\boldsymbol{\theta}}(\mathcal{D}^{(s)})\}$ that in the limmit of $S\rightarrow\infty$: $p\left(\hat{\Theta}(\tilde{\mathcal{D}})=\boldsymbol{\theta}\mid\tilde{\mathcal{D}}\sim\boldsymbol{\theta}^\ast\right) \approx \frac{1}{S}\sum_{s=1}^S\delta\left(\boldsymbol{\theta} - \Theta\left(\tilde{\mathcal{D}}^{(s)}\right) \right)$
     - this can be approximated by *Monte Carlo* (Sec.3.3.2) and rarely computed analytically (Sec.3.3.3)
 
 ### 3.3.2 Bootstrap approximation of the sampling distribution
 - When data is small or the estimator is a complex function of the data $\rightarrow$ Monte Carlo method known as **Bootstrap** is very powerful [[ET93](https://books.google.com/books?hl=en&lr=&id=gLlpIUxRntoC&oi=fnd&pg=PR14&dq=an+introduction+to+the+bootstrap&ots=AaCyV2LeD2&sig=CjNPLqpdtSj-f96GU8thaG8B7kg)]
-    - The premise is simple: if we knew the true params $\vec{\theta}^\ast$ we could generate $S$ "fake" samples (each of size $N$) that are observables $\tilde{\mathcal{D}}^{(s)} = \left\{ \vec{x}_n\sim p(\vec{x}_n\mid\vec{\theta}^\ast):n=1:N\right\}$
-    - then compute each sample estimates $\hat{\vec\theta}^{s} = \hat{\Theta}\left(\tilde{\mathcal{D}}^{(s)}\right)$ and then use the empirical estimate of this dist
+    - The premise is simple: if we knew the true params $\boldsymbol{\theta}^\ast$ we could generate $S$ "fake" samples (each of size $N$) that are observables $\tilde{\mathcal{D}}^{(s)} = \left\{ \boldsymbol{x}_n\sim p(\boldsymbol{x}_n\mid\boldsymbol{\theta}^\ast):n=1:N\right\}$
+    - then compute each sample estimates $\hat{\boldsymbol\theta}^{s} = \hat{\Theta}\left(\tilde{\mathcal{D}}^{(s)}\right)$ and then use the empirical estimate of this dist
     
-- **parameteric bootstrap** is a *plug-in approx* (Sec.3.2.1.8), proposes generating samples from $\hat{\vec{\theta}}=\hat{\Theta}\left(\mathcal{D} \right)$ instead of $\vec{\theta}^\ast$ in (eq.3.37) ie. we use $\tilde{\mathcal{D}}^{(s)}=\left\{\vec{x}_n\sim p(\vec{x}_n\mid\hat{\vec{\theta}}):n=1:N\right\}$ this is a plug-in approx to the sampling dist
-- Because the generating model $p(\vec{x}\mid\vec{\theta})$ for an initial $\hat{\vec{\theta}}$ is often not available, we can use **non-parametric bootstrap** $\rightarrow$ *re-sampling w/ replacement* 
+- **parameteric bootstrap** is a *plug-in approx* (Sec.3.2.1.8), proposes generating samples from $\hat{\boldsymbol{\theta}}=\hat{\Theta}\left(\mathcal{D} \right)$ instead of $\boldsymbol{\theta}^\ast$ in (eq.3.37) ie. we use $\tilde{\mathcal{D}}^{(s)}=\left\{\boldsymbol{x}_n\sim p(\boldsymbol{x}_n\mid\hat{\boldsymbol{\theta}}):n=1:N\right\}$ this is a plug-in approx to the sampling dist
+- Because the generating model $p(\boldsymbol{x}\mid\boldsymbol{\theta})$ for an initial $\hat{\boldsymbol{\theta}}$ is often not available, we can use **non-parametric bootstrap** $\rightarrow$ *re-sampling w/ replacement* 
     - fact: the number of unique datapoints in a bootstrap sample is $(1-(1-1/N)^N)\sim 1 - e^{-1}\approx 0.632$, for large $N$
-- From Fig.3.4 how is parametric boostrap estimate $\hat{\vec{\theta}}^s = \delta\left(\mathcal{D} \right)$ (a-b) different from posterior sampling $\vec{\theta}^s\sim p(\cdot \mid \mathcal{D})$ (c-d)? Ans. very different conceptually but not so different if frequentist estimator is MLE and bayes prior is weak
+- From Fig.3.4 how is parametric boostrap estimate $\hat{\boldsymbol{\theta}}^s = \delta\left(\mathcal{D} \right)$ (a-b) different from posterior sampling $\boldsymbol{\theta}^s\sim p(\cdot \mid \mathcal{D})$ (c-d)? Ans. very different conceptually but not so different if frequentist estimator is MLE and bayes prior is weak
     
 <img src="images/ch0332-bootstrap-vs-bayes.png" width="70%">
 
@@ -145,20 +142,20 @@ $p(\mathcal{D}\mid{\theta}) = \prod_n^N\theta^{y_n}(1-\theta)^{1-y_n}=\theta^{N_
 ### 3.3.3 Assymptotic normality of the sampling distribution of the MLE
 - the most common estimator is MLE. When sample size is large then the MLE sampling dist becomes Normal 
 - *Theorem 3.3.1* under certain conditions:
-    $\sqrt{N} (\hat{\vec{\theta}}-\vec{\theta}^\ast) \rightarrow \mathcal{N}(\mathbf{0}, \mathbf{F}(\vec{\theta}^\ast)^{-1})$, where $\mathbf{F}$ is the *Fisher information matrix* (Sec.3.3.4.1)
+    $\sqrt{N} (\hat{\boldsymbol{\theta}}-\boldsymbol{\theta}^\ast) \rightarrow \mathcal{N}(\mathbf{0}, \mathbf{F}(\boldsymbol{\theta}^\ast)^{-1})$, where $\mathbf{F}$ is the *Fisher information matrix* (Sec.3.3.4.1)
 
 ### 3.3.4 Fisher Information Matrix (FIM)
 - The FIM is related to the curvature of the log-likelihood. It is crucial in freq stats for characterizing the sampling dist in MLE (Sec.3.3.3)
 - Also useful in Bayes stats: used to define *Jeffrey's unninformative priors* (Sec.3.5.2) & optimization techniques ie gradient descent, procedure $\ldots$ (Sec.6.4)
 
 #### 3.3.4.1 FIM Definition
-- The **score function** measures the amount of information a rv $\vec{x}$ carries about a param $\theta$ that models $\vec{x}$. It's the grad of the log-likelihood (eq.3.39): $\vec{s}(\vec{\theta})=\nabla\log p(\vec{x}\mid \vec{\theta})$
-- FIM is the covariance of the score func (eq.3.40): $\mathbf{F}(\vec{\theta})=\mathbb{E}_{\vec{x}\sim p(\vec{x}\mid\vec{\theta})}\left[\vec{s}\vec{s}^\top \right]$
+- The **score function** measures the amount of information a rv $\boldsymbol{x}$ carries about a param $\theta$ that models $\boldsymbol{x}$. It's the grad of the log-likelihood (eq.3.39): $\boldsymbol{s}(\boldsymbol{\theta})=\nabla\log p(\boldsymbol{x}\mid \boldsymbol{\theta})$
+- FIM is the covariance of the score func (eq.3.40): $\mathbf{F}(\boldsymbol{\theta})=\mathbb{E}_{\boldsymbol{x}\sim p(\boldsymbol{x}\mid\boldsymbol{\theta})}\left[\boldsymbol{s}\boldsymbol{s}^\top \right]$
 
 #### 3.3.4.2 Equivalence between FIM and the Hessian of the NLL
-- FIM equals the expected Hessian of the negative log-likelihood NLL ($\operatorname{NLL}(\vec{\theta})=-\log p(\mathcal{D}\mid\vec{\theta})$)
+- FIM equals the expected Hessian of the negative log-likelihood NLL ($\operatorname{NLL}(\boldsymbol{\theta})=-\log p(\mathcal{D}\mid\boldsymbol{\theta})$)
     - the Hessian (square mat of 2nd ord partial derivatives) describes the curvature of a multivariate func ie. likelihood $\rightarrow$ FIM tells us how well the likelihood func can identify the optimal params
-    - Proof of this uses *Theorem 3.3.2* & *Lemma 3.3.1*, which results in (eq.3.53): $\mathbb{E}_{p(\mathcal{D} \mid \vec{\theta})}\left[\left.\mathbf{H}(\mathcal{D})\right|_{\vec{\theta}}\right]=N \mathbf{F}(\vec{\theta})$
+    - Proof of this uses *Theorem 3.3.2* & *Lemma 3.3.1*, which results in (eq.3.53): $\mathbb{E}_{p(\mathcal{D} \mid \boldsymbol{\theta})}\left[\left.\mathbf{H}(\mathcal{D})\right|_{\boldsymbol{\theta}}\right]=N \mathbf{F}(\boldsymbol{\theta})$
 
 #### 3.3.4.3 Example: FIM for the Binomial
 - We arrive to the FIM for the eg. single-sample ($N=1$) Binomial $x\sim\operatorname{Bin}(n,\theta)$ using:
@@ -168,11 +165,11 @@ $p(\mathcal{D}\mid{\theta}) = \prod_n^N\theta^{y_n}(1-\theta)^{1-y_n}=\theta^{N_
     - FIM: $\mathbb{E}[\mathbf{H}(-l)] = \frac{n}{\theta(1-\theta)}$
 
 #### 3.3.4.4 Example: FIM for the univariate Gaussian
-- FIM for eg. the univariate Gaussian $p(x\mid\vec{\theta}) = \mathcal{N}(x\mid\mu,\sigma^2)$ w/ log-likelihood $l(\vec{\theta})$ is:
+- FIM for eg. the univariate Gaussian $p(x\mid\boldsymbol{\theta}) = \mathcal{N}(x\mid\mu,\sigma^2)$ w/ log-likelihood $l(\boldsymbol{\theta})$ is:
 
 
 \begin{align*}
-\mathbf{F}(\vec{\theta})=\left(\begin{array}{cc} 
+\mathbf{F}(\boldsymbol{\theta})=\left(\begin{array}{cc} 
 \mathbb{E}\left[-\frac{\partial^2 l}{\partial\mu^2}\right] & \mathbb{E}\left[-\frac{\partial^2 l}{\partial\mu\partial(\sigma^2)}\right] \\
 \mathbb{E}\left[-\frac{\partial^2 l}{\partial\mu\partial(\sigma^2)}\right] & \mathbb{E}\left[-\frac{\partial^2 l}{\partial(\sigma^2)^2}\right]
 \end{array}\right)=\left(\begin{array}{cc}
@@ -183,15 +180,15 @@ $p(\mathcal{D}\mid{\theta}) = \prod_n^N\theta^{y_n}(1-\theta)^{1-y_n}=\theta^{N_
 
 
 #### 3.3.4.5 Example: FIM for Logistic Regression
-- By the same token as before, for eg. the $l_2$-regularized binary log reg w/ negative log joint $\mathcal{E}(\vec{w})=-\log[p(\vec{y}\mid\mathbf{X},\vec{w}) p(\vec{w}\mid\lambda)]$
-    - FIM: $\mathbf{F}(\vec{w}) = \mathbb{E}\left[\nabla^2\mathcal{E}(\vec{w}) \right] = \mathbf{X}^\top\mathbf{\Lambda}\mathbf{X}+\lambda\mathbf{I}$, where $\mathbf{\Lambda}$ is an $N\times N$ mat: $\Lambda_{nn}=\sigma(\vec{w}^\top\vec{x}_n)(1-\sigma(\vec{w}^\top\vec{x}_n))$
+- By the same token as before, for eg. the $l_2$-regularized binary log reg w/ negative log joint $\mathcal{E}(\boldsymbol{w})=-\log[p(\boldsymbol{y}\mid\mathbf{X},\boldsymbol{w}) p(\boldsymbol{w}\mid\lambda)]$
+    - FIM: $\mathbf{F}(\boldsymbol{w}) = \mathbb{E}\left[\nabla^2\mathcal{E}(\boldsymbol{w}) \right] = \mathbf{X}^\top\mathbf{\Lambda}\mathbf{X}+\lambda\mathbf{I}$, where $\mathbf{\Lambda}$ is an $N\times N$ mat: $\Lambda_{nn}=\sigma(\boldsymbol{w}^\top\boldsymbol{x}_n)(1-\sigma(\boldsymbol{w}^\top\boldsymbol{x}_n))$
 
 #### 3.3.4.6 Example: FIM for the Exponential family
-- FIM for expo fam eg. in its **natural/canonical parameterization** version ($\vec{\eta}$). Recall from:
-    - (eq.2.216) in (Sec.2.4.3) that the gradient of the *log-partition func* is the expected *sufficient statistics* $\nabla_{\vec{\eta}}A(\vec{\eta}) = \mathbb{E}[\mathcal{T}(\vec{x})] = \vec{m}$ 
-    - and (eq.2.247) that the log-likelihood is suff stats minus its expected val: $\nabla_{\vec{\eta}}\log p(\vec{x}\mid\vec{\eta}) = \mathcal{T}(\vec{x}) - \mathbb{E}[\mathcal{T}(\vec{x})]$
-    - then the FIM is: $\mathbf{F}_{\vec{\eta}}=\operatorname{Cov}[\mathcal{T}(\vec{x})]$
-- FIM in its **moment parameterization** version: $\mathbf{F}_{\vec{m}}=\mathbf{F}_{\vec{\eta}}^{-1}=\mathrm{Cov}[\mathcal{T}(\vec{x})]^{-1}$
+- FIM for expo fam eg. in its **natural/canonical parameterization** version ($\boldsymbol{\eta}$). Recall from:
+    - (eq.2.216) in (Sec.2.4.3) that the gradient of the *log-partition func* is the expected *sufficient statistics* $\nabla_{\boldsymbol{\eta}}A(\boldsymbol{\eta}) = \mathbb{E}[\mathcal{T}(\boldsymbol{x})] = \boldsymbol{m}$ 
+    - and (eq.2.247) that the log-likelihood is suff stats minus its expected val: $\nabla_{\boldsymbol{\eta}}\log p(\boldsymbol{x}\mid\boldsymbol{\eta}) = \mathcal{T}(\boldsymbol{x}) - \mathbb{E}[\mathcal{T}(\boldsymbol{x})]$
+    - then the FIM is: $\mathbf{F}_{\boldsymbol{\eta}}=\operatorname{Cov}[\mathcal{T}(\boldsymbol{x})]$
+- FIM in its **moment parameterization** version: $\mathbf{F}_{\boldsymbol{m}}=\mathbf{F}_{\boldsymbol{\eta}}^{-1}=\mathrm{Cov}[\mathcal{T}(\boldsymbol{x})]^{-1}$
 
 ### 3.3.5 Counterintuitive properties of frequentist statistics
 - Frequentist stats carries pathological properties, so its strange that this is the most taught paradigm in academia. We'll explore these limitations in the following sub-sections
@@ -211,8 +208,8 @@ Therefore $H_0$ is probably false
 
 #### 3.3.5.3 Discussion
 - Users of statistics want to know the probability (after seeing the data) that a hypothesis is true, or the probability that the param $\theta$ is in a given interval, and yet frequentist can't offer this
-    - frequentists assume fixed parameters $\vec{\theta}$ given a model, which are then evaluated w/ hypothesis tests. This rigid approach forces to induce fixed uncertainty (using sampling) and use conf ints that have the limitation of ruling out whatever doesn't fit our model.
-    - Bayes, instead, is a calibrated approach. We update our opinions of the world given new observed data, having $\vec{\theta}$ as a quantity w/ capabilities of updating
+    - frequentists assume fixed parameters $\boldsymbol{\theta}$ given a model, which are then evaluated w/ hypothesis tests. This rigid approach forces to induce fixed uncertainty (using sampling) and use conf ints that have the limitation of ruling out whatever doesn't fit our model.
+    - Bayes, instead, is a calibrated approach. We update our opinions of the world given new observed data, having $\boldsymbol{\theta}$ as a quantity w/ capabilities of updating
     - Great readings on this topic: https://bit.ly/3Rbd4lo and https://bit.ly/3j8miSR
 
 ### 3.3.6 Why isn't everyone a Bayesian?
@@ -222,24 +219,24 @@ Therefore $H_0$ is probably false
 ## 3.4 Conjugate priors
 
 - *conjugate priors* (a special form of priors) simplify the computaiton of Bayesian posteriors via closed computation of functional family $\mathcal{F}$. This is formally written as: 
-    - the prior $p(\vec{\theta})$ in the parameterized family $\mathcal{F}$ is **conjugate prior** of the likelihood $p(\mathcal{D}\mid{\theta})$ if the posterior is in the same parameterized family $\mathcal{F}$ (eg. Sec.3.2.1.3) $\rightarrow$ So $\mathcal{F}$ is closed under Bayesian updating
+    - the prior $p(\boldsymbol{\theta})$ in the parameterized family $\mathcal{F}$ is **conjugate prior** of the likelihood $p(\mathcal{D}\mid{\theta})$ if the posterior is in the same parameterized family $\mathcal{F}$ (eg. Sec.3.2.1.3) $\rightarrow$ So $\mathcal{F}$ is closed under Bayesian updating
     - the exponential family also allows closed $\mathcal{F}$ computation
 
 ### 3.4.1 The Binomial model
 - One of the simpliest models is the beta-binomial model, we've seen it in Sec.3.2.1
 
 ### 3.4.2 The multinomial model
-- Generalizes the Binomial model to $C$ number of categories and $N$ number of trials. Also, let the rv $y\sim\operatorname{Cat}(\vec{\theta})$
-    - likelihood (one prod for trials and another for categorical dists): $p(\mathcal{D}\mid\vec{\theta})=\prod^N \operatorname{Cat}(y_n\mid\vec{\theta})=\prod^N\prod^C\theta_c^{\mathbb{I}(y_n=c)}=\prod^C\theta_c^{N_C}$
-    - this generalized to the **multinomial dist** by accounting for unique counts using the binomial term: $p(\vec{y} \mid N, \vec{\theta})=\left(\begin{array}{c} N \\ N_1 \ldots N_C \end{array}\right) \prod^C \theta_c^{N_c}$
-    - *conjugate prior* for a cat dist is the Dirichlet dist: $p(\vec{\theta})=\operatorname{Dir}(\vec{\theta},\breve{\vec{\alpha}})$
-    - *Dirichlet posterior* is: $p(\vec{\theta}\mid\mathcal{D})\propto \operatorname{Dir}(\vec{\theta},\hat{\vec{\alpha}})$, where as any other conjugate prior it has the same functional form w/ change of variables $\hat{\alpha}_k=\breve{\alpha}+N_k$ ($k$-th categorie of $C$)
+- Generalizes the Binomial model to $C$ number of categories and $N$ number of trials. Also, let the rv $y\sim\operatorname{Cat}(\boldsymbol{\theta})$
+    - likelihood (one prod for trials and another for categorical dists): $p(\mathcal{D}\mid\boldsymbol{\theta})=\prod^N \operatorname{Cat}(y_n\mid\boldsymbol{\theta})=\prod^N\prod^C\theta_c^{\mathbb{I}(y_n=c)}=\prod^C\theta_c^{N_C}$
+    - this generalized to the **multinomial dist** by accounting for unique counts using the binomial term: $p(\boldsymbol{y} \mid N, \boldsymbol{\theta})=\left(\begin{array}{c} N \\ N_1 \ldots N_C \end{array}\right) \prod^C \theta_c^{N_c}$
+    - *conjugate prior* for a cat dist is the Dirichlet dist: $p(\boldsymbol{\theta})=\operatorname{Dir}(\boldsymbol{\theta},\breve{\boldsymbol{\alpha}})$
+    - *Dirichlet posterior* is: $p(\boldsymbol{\theta}\mid\mathcal{D})\propto \operatorname{Dir}(\boldsymbol{\theta},\hat{\boldsymbol{\alpha}})$, where as any other conjugate prior it has the same functional form w/ change of variables $\hat{\alpha}_k=\breve{\alpha}+N_k$ ($k$-th categorie of $C$)
     - some cool features:
         - mode is: $\hat{\theta}_k=\frac{N_k+\breve{\alpha}_k-1}{\sum^K N_k+\hat{\alpha}-1}$, from which we recover the MLE and add-one smoothing w/ , $\breve{\alpha}=1,2$ respectively
-        - the *marginal likelihood* can be written in terms of beta and gamma dists: $p(\mathcal{D})=\frac{\operatorname{B}(\mathbf{N}+\vec{\alpha})}{\operatorname{B}(\vec{\alpha})}=\frac{\Gamma(\sum_k\alpha_k)}{\Gamma(N+\sum_k\alpha_k)}\prod_k\frac{\Gamma(N_k+\alpha_k)}{\Gamma(\alpha_k)}$
+        - the *marginal likelihood* can be written in terms of beta and gamma dists: $p(\mathcal{D})=\frac{\operatorname{B}(\mathbf{N}+\boldsymbol{\alpha})}{\operatorname{B}(\boldsymbol{\alpha})}=\frac{\Gamma(\sum_k\alpha_k)}{\Gamma(N+\sum_k\alpha_k)}\prod_k\frac{\Gamma(N_k+\alpha_k)}{\Gamma(\alpha_k)}$
         
 ### 3.4.3 The univariate Gaussian distribution
-- There's different cojugate priors depending on which params are known ie: only $\mu$ is unknown, only $\sigma^2$ is unknown and both $\vec{\theta}=(\mu, \sigma^2)$ are not knwon. We'll explore each case in the following sections
+- There's different cojugate priors depending on which params are known ie: only $\mu$ is unknown, only $\sigma^2$ is unknown and both $\boldsymbol{\theta}=(\mu, \sigma^2)$ are not knwon. We'll explore each case in the following sections
 
 #### 3.4.3.1 Posterior of $\mu$ given $\sigma^2$
 - likelihood is Gaussian: $p(\mathcal{D}\mid\mu)\propto \exp \left( -\frac{1}{2\sigma^2} \sum^N_{n=1}(y_n-\mu)^2 \right)$
@@ -276,57 +273,57 @@ Therefore $H_0$ is probably false
 
 ### 3.4.4 Multivariate Gaussian
 - Refer to the book for full equations, these are long eqs w/ many matrix manipulations. Here We'll write the minimal expressions
-    - recall that Chap.3. Statistics is all about obtaining posteriors ie. $p(\vec{\mu}, \vec{\Sigma}\mid\mathcal{D})$
+    - recall that Chap.3. Statistics is all about obtaining posteriors ie. $p(\boldsymbol{\mu}, \boldsymbol{\Sigma}\mid\mathcal{D})$
 
-#### 3.4.4.1 Posterior of $\vec{\mu}$ given $\vec{\Sigma}$
-- likelihood (can ignore the proportional factor): $p(\mathcal{D}\mid\vec{\mu})=\mathcal{N}(\vec{\bar{y}}\mid\vec{\mu},\vec{\Sigma}/N)$
-- conjugate (for simplicity) prior is Gaussian: $p(\vec{\mu})=\mathcal{N}(\vec{\mu}\mid\vec{\breve{m}}, \mathbf{\breve{V}})$
-- posterior is also Gaussian: $p(\vec{\mu}\mid\mathcal{D}, \vec{\Sigma})=\mathcal{N}(\vec{\mu}\mid\vec{\hat{m}}, \mathbf{\hat{V}})$
+#### 3.4.4.1 Posterior of $\boldsymbol{\mu}$ given $\boldsymbol{\Sigma}$
+- likelihood (can ignore the proportional factor): $p(\mathcal{D}\mid\boldsymbol{\mu})=\mathcal{N}(\boldsymbol{\bar{y}}\mid\boldsymbol{\mu},\boldsymbol{\Sigma}/N)$
+- conjugate (for simplicity) prior is Gaussian: $p(\boldsymbol{\mu})=\mathcal{N}(\boldsymbol{\mu}\mid\boldsymbol{\breve{m}}, \mathbf{\breve{V}})$
+- posterior is also Gaussian: $p(\boldsymbol{\mu}\mid\mathcal{D}, \boldsymbol{\Sigma})=\mathcal{N}(\boldsymbol{\mu}\mid\boldsymbol{\hat{m}}, \mathbf{\hat{V}})$
 
-#### 3.4.4.2 Posterior of $\vec{\Sigma}$ given $\vec{\mu}$
-- likelihood is MVG: $p(\mathcal{D}\mid\vec{\mu},\mathbf{\Sigma}) \propto |\vec{\Sigma}|^{-N/2}\exp\left(-\frac{1}{2} \operatorname{tr}(\mathbf{S}_\mu\vec{\Sigma}^{-1})\right)$, where $\mathbf{S}_\mu$ is a scatter matrix around $\mu$
-- conjugate prior is **Inverse Wishart (IW)** dist: $\operatorname{IW}(\mathbf{\Sigma}\mid\vec{\breve{\Psi}}, \breve{\nu}) \propto |\vec{\Sigma}|^{-(\breve{\nu}+D+1)/2}\exp\left(-\frac{1}{2} \operatorname{tr}(\vec{\breve{\Psi}}\vec{\Sigma}^{-1})\right)$, where $\breve{\nu}>D-1$ is dof, $\mathbf{\breve{\Psi}}$ is a symmetric pd mat, acts as a prior scatter mat and $N_0=\breve{\nu}+D+1$ controls the strength of the prior
-- posterior is also an IW: $p(\vec{\Sigma} \mid \mathcal{D}, \vec{\mu})\propto|\vec{\Sigma}|^{-\frac{N}{2}} \exp \left(-\frac{1}{2} \operatorname{tr}\left(\vec{\Sigma}^{-1} \mathbf{S}_\mu\right)\right)|\vec{\Sigma}|^{-(\breve{\nu}+D+1) / 2}$
+#### 3.4.4.2 Posterior of $\boldsymbol{\Sigma}$ given $\boldsymbol{\mu}$
+- likelihood is MVG: $p(\mathcal{D}\mid\boldsymbol{\mu},\mathbf{\Sigma}) \propto |\boldsymbol{\Sigma}|^{-N/2}\exp\left(-\frac{1}{2} \operatorname{tr}(\mathbf{S}_\mu\boldsymbol{\Sigma}^{-1})\right)$, where $\mathbf{S}_\mu$ is a scatter matrix around $\mu$
+- conjugate prior is **Inverse Wishart (IW)** dist: $\operatorname{IW}(\mathbf{\Sigma}\mid\boldsymbol{\breve{\Psi}}, \breve{\nu}) \propto |\boldsymbol{\Sigma}|^{-(\breve{\nu}+D+1)/2}\exp\left(-\frac{1}{2} \operatorname{tr}(\boldsymbol{\breve{\Psi}}\boldsymbol{\Sigma}^{-1})\right)$, where $\breve{\nu}>D-1$ is dof, $\mathbf{\breve{\Psi}}$ is a symmetric pd mat, acts as a prior scatter mat and $N_0=\breve{\nu}+D+1$ controls the strength of the prior
+- posterior is also an IW: $p(\boldsymbol{\Sigma} \mid \mathcal{D}, \boldsymbol{\mu})\propto|\boldsymbol{\Sigma}|^{-\frac{N}{2}} \exp \left(-\frac{1}{2} \operatorname{tr}\left(\boldsymbol{\Sigma}^{-1} \mathbf{S}_\mu\right)\right)|\boldsymbol{\Sigma}|^{-(\breve{\nu}+D+1) / 2}$
 
-#### 3.4.4.3 Posterior of both $\vec{\mu}$ and $\vec{\Sigma}$
-- likelihood is MVN (can be written as in Sec.2.3.1.1, but we'll use a modified version): $p(\mathcal{D} \mid \vec{\mu}, \vec{\Sigma}) \propto|\vec{\Sigma}|^{-\frac{N}{2}}\exp\left(-\frac{N}{2} (\vec{\mu}-\bar{\vec{y}})^{\top} \vec{\Sigma}^{-1}(\vec{\mu}-\bar{\vec{y}})\right) \exp \left(-\frac{1}{2} \operatorname{tr}\left(\vec{\Sigma}^{-1} \mathbf{S}\right)\right)$, where $\mathbf{S}=\mathbf{S}_{\vec{\bar{y}}}=\mathbf{Y}^\top \mathbf{C}_N \mathbf{Y}$ is a scatter matrix and $\mathbf{C}_N$ is a centering matrix
+#### 3.4.4.3 Posterior of both $\boldsymbol{\mu}$ and $\boldsymbol{\Sigma}$
+- likelihood is MVN (can be written as in Sec.2.3.1.1, but we'll use a modified version): $p(\mathcal{D} \mid \boldsymbol{\mu}, \boldsymbol{\Sigma}) \propto|\boldsymbol{\Sigma}|^{-\frac{N}{2}}\exp\left(-\frac{N}{2} (\boldsymbol{\mu}-\bar{\boldsymbol{y}})^{\top} \boldsymbol{\Sigma}^{-1}(\boldsymbol{\mu}-\bar{\boldsymbol{y}})\right) \exp \left(-\frac{1}{2} \operatorname{tr}\left(\boldsymbol{\Sigma}^{-1} \mathbf{S}\right)\right)$, where $\mathbf{S}=\mathbf{S}_{\boldsymbol{\bar{y}}}=\mathbf{Y}^\top \mathbf{C}_N \mathbf{Y}$ is a scatter matrix and $\mathbf{C}_N$ is a centering matrix
 -prior:
-    - following naive intuition would lead us to use the prior: $p(\vec{\mu},\vec{\Sigma})=\mathcal{N}(\vec{\mu}\mid\vec{\breve{m}}, \mathbf{\breve{V}})\operatorname{IW}(\vec{\Sigma}\mid\vec{\breve{\Psi}}, \breve{\nu})$, BUT is not a conjugate prior but rather a **conditionally conjugate** (because $\vec{\mu}, \vec{\Sigma}$ appear in a non-factorizable way in the likelihood)
-    - thus we use change of variables and arrive to an **Normal-Inverse-Wishart (NIW)** dist which is our conjugate prior: $\operatorname{NIW}(\vec{\mu},\vec{\Sigma}\mid\vec{\breve{m}},\breve{\kappa},\breve{\nu},\vec{\breve{\Psi}})=\mathcal{N}(\vec{\mu}\mid\vec{\breve{m}},\vec{\Sigma}/\breve{\kappa})\operatorname{IW}(\vec{\Sigma}\mid\vec{\breve{\Psi}},\breve{\nu})$, 
-        - where $\vec{\breve{m}}$ is our prior mean for $\vec{\mu}$, and $\breve{\kappa}$ is how strongly we strongly we believe this prior; $\vec{\breve{\Psi}}$ is (proportional to) our prior mean for $\vec{\Sigma}$, and $\breve{\nu}$ is how strongly we believe this prior
-- posterior is also a NIW (after long chang vars & matrix manipulations): $p(\vec{\mu},\vec{\Sigma}\mid\mathcal{D})=\operatorname{NIW}(\vec{\mu},\vec{\Sigma}\mid\vec{\hat{m}},\hat{\kappa},\hat{\nu},\vec{\hat{\Psi}})=\mathcal{N}(\vec{\mu}\mid\vec{\hat{m}},\vec{\Sigma}/\hat{\kappa})\operatorname{IW}(\vec{\Sigma}\mid\vec{\hat{\Psi}},\hat{\nu})$ 
-    - $\vec{\hat{\mu}}=\frac{\breve{\kappa}}{\breve{\kappa}+N}\vec{\breve{\mu}}+\frac{N}{\breve{\kappa}+N}\vec{\bar{y}}$
-    - $\vec{\hat{\Psi}}=\vec{\breve{\Psi}}+\mathbf{Y}^\top\mathbf{Y}+\breve{\kappa}\vec{\breve{m}}\vec{\breve{m}}^\top-\hat{\kappa}\vec{\hat{m}}\vec{\hat{m}}^\top$, with a (re-writen) scatter matrix for a rv $\mathcal{D}\rightarrow\mathbf{Y}$: $\mathbf{S}=\mathbf{Y}^\top\mathbf{Y}-N\vec{\bar{y}}\vec{\bar{y}}^\top$
-    - the interpretation is intuitive: the posterior mean $\vec{\hat{m}}$ is a convex combination of the prior mean and the MLE; the posterior scatter matrix $\vec{\hat{\Psi}}$ is the prior scatter matrix $\vec{\breve{\Psi}}$ plus the empirical scatter matrix $\mathbf{S}$ plus an extra term due to the uncertainty in the mean (which creates its own virtual scatter matrix eq.3.171); the posterior confidence factors $\hat{\kappa}$ and $\hat{\nu}$ are both incremented by the size of the data we condition on
+    - following naive intuition would lead us to use the prior: $p(\boldsymbol{\mu},\boldsymbol{\Sigma})=\mathcal{N}(\boldsymbol{\mu}\mid\boldsymbol{\breve{m}}, \mathbf{\breve{V}})\operatorname{IW}(\boldsymbol{\Sigma}\mid\boldsymbol{\breve{\Psi}}, \breve{\nu})$, BUT is not a conjugate prior but rather a **conditionally conjugate** (because $\boldsymbol{\mu}, \boldsymbol{\Sigma}$ appear in a non-factorizable way in the likelihood)
+    - thus we use change of variables and arrive to an **Normal-Inverse-Wishart (NIW)** dist which is our conjugate prior: $\operatorname{NIW}(\boldsymbol{\mu},\boldsymbol{\Sigma}\mid\boldsymbol{\breve{m}},\breve{\kappa},\breve{\nu},\boldsymbol{\breve{\Psi}})=\mathcal{N}(\boldsymbol{\mu}\mid\boldsymbol{\breve{m}},\boldsymbol{\Sigma}/\breve{\kappa})\operatorname{IW}(\boldsymbol{\Sigma}\mid\boldsymbol{\breve{\Psi}},\breve{\nu})$, 
+        - where $\boldsymbol{\breve{m}}$ is our prior mean for $\boldsymbol{\mu}$, and $\breve{\kappa}$ is how strongly we strongly we believe this prior; $\boldsymbol{\breve{\Psi}}$ is (proportional to) our prior mean for $\boldsymbol{\Sigma}$, and $\breve{\nu}$ is how strongly we believe this prior
+- posterior is also a NIW (after long chang vars & matrix manipulations): $p(\boldsymbol{\mu},\boldsymbol{\Sigma}\mid\mathcal{D})=\operatorname{NIW}(\boldsymbol{\mu},\boldsymbol{\Sigma}\mid\boldsymbol{\hat{m}},\hat{\kappa},\hat{\nu},\boldsymbol{\hat{\Psi}})=\mathcal{N}(\boldsymbol{\mu}\mid\boldsymbol{\hat{m}},\boldsymbol{\Sigma}/\hat{\kappa})\operatorname{IW}(\boldsymbol{\Sigma}\mid\boldsymbol{\hat{\Psi}},\hat{\nu})$ 
+    - $\boldsymbol{\hat{\mu}}=\frac{\breve{\kappa}}{\breve{\kappa}+N}\boldsymbol{\breve{\mu}}+\frac{N}{\breve{\kappa}+N}\boldsymbol{\bar{y}}$
+    - $\boldsymbol{\hat{\Psi}}=\boldsymbol{\breve{\Psi}}+\mathbf{Y}^\top\mathbf{Y}+\breve{\kappa}\boldsymbol{\breve{m}}\boldsymbol{\breve{m}}^\top-\hat{\kappa}\boldsymbol{\hat{m}}\boldsymbol{\hat{m}}^\top$, with a (re-writen) scatter matrix for a rv $\mathcal{D}\rightarrow\mathbf{Y}$: $\mathbf{S}=\mathbf{Y}^\top\mathbf{Y}-N\boldsymbol{\bar{y}}\boldsymbol{\bar{y}}^\top$
+    - the interpretation is intuitive: the posterior mean $\boldsymbol{\hat{m}}$ is a convex combination of the prior mean and the MLE; the posterior scatter matrix $\boldsymbol{\hat{\Psi}}$ is the prior scatter matrix $\boldsymbol{\breve{\Psi}}$ plus the empirical scatter matrix $\mathbf{S}$ plus an extra term due to the uncertainty in the mean (which creates its own virtual scatter matrix eq.3.171); the posterior confidence factors $\hat{\kappa}$ and $\hat{\nu}$ are both incremented by the size of the data we condition on
 - posterior have different flavors (MLE, MAP, marginals) and uses (eg. predicting rvs):
-    - *posterior marginals*: from the last NIW posterior, we can compute the marginals for $\vec{\mu}$ and $\vec{\Sigma}$
-        - $p(\vec{\Sigma}\mid\mathcal{D})=\int p(\vec{\mu},\vec{\Sigma}\mid\mathcal{D})d\vec{\mu}=\operatorname{IW}(\vec{\Sigma}\mid\vec{\hat{\Psi}},\hat{\nu})$
-        - $p(\vec{\mu}\mid\mathcal{D})=\int p(\vec{\mu},\vec{\Sigma}\mid\mathcal{D})d\vec{\Sigma}=\mathcal{T}(\vec{\mu}\mid\vec{\hat{\mu}},\frac{\vec{\hat{\Psi}}}{\hat{\kappa}\hat{\nu}^\prime},\hat{\nu}^\prime)$, where $\hat{\nu}^\prime=\hat{\nu}-D+1$
-    - *posterior mode*: the MAP of $\vec{\mu}$ and $\vec{\Sigma}$ is the mode of NIW (lets say that our observations are rvs $\mathbf{Y}$): $p(\vec{\mu},\vec{\Sigma}\mid\mathbf{Y})=\operatorname{NIW}(\vec{\mu}=\vec{\hat{\mu}},\vec{\Sigma}\mid\vec{\hat{m}}=\vec{\hat{\mu}},\hat{\kappa},\hat{\nu},\vec{\hat{\Psi}})$, where $\vec{\hat{\mu}}$ is identical as the last NIW posterior (convex comb) and we can factorize $\vec{\Sigma}$ and obtain its estimate directly from the IW term: $\vec{\hat{\Sigma}}=\frac{1}{\hat{\nu}+D+2}\vec{\hat{\Psi}}$
-    - *posterior predictive*: following Sec.3.2.1.8 idea's $p(\vec{y} \mid \mathcal{D})=\int \text{rv-dist}\times\text{bayes-post} \;d\vec{\theta}$ ; but now rv-dist is MVN: $p(\vec{y}\mid\mathcal{D})=\int\mathcal{N}(\vec{x}\mid\vec{\mu},\vec{\Sigma})\operatorname{NIW}(\vec{\mu},\vec{\Sigma}\mid\vec{\hat{m}},\hat{\kappa},\hat{\nu},\vec{\hat{\Psi}})d\vec{\mu}d\vec{\Sigma}=\mathcal{T}\left(\vec{y}\mid\vec{\hat{m}},\frac{\vec{\hat{\Psi}}(\hat{\kappa}+1)}{\hat{\kappa}\hat{\nu}^\prime}, \hat{\nu}^\prime \right)$
+    - *posterior marginals*: from the last NIW posterior, we can compute the marginals for $\boldsymbol{\mu}$ and $\boldsymbol{\Sigma}$
+        - $p(\boldsymbol{\Sigma}\mid\mathcal{D})=\int p(\boldsymbol{\mu},\boldsymbol{\Sigma}\mid\mathcal{D})d\boldsymbol{\mu}=\operatorname{IW}(\boldsymbol{\Sigma}\mid\boldsymbol{\hat{\Psi}},\hat{\nu})$
+        - $p(\boldsymbol{\mu}\mid\mathcal{D})=\int p(\boldsymbol{\mu},\boldsymbol{\Sigma}\mid\mathcal{D})d\boldsymbol{\Sigma}=\mathcal{T}(\boldsymbol{\mu}\mid\boldsymbol{\hat{\mu}},\frac{\boldsymbol{\hat{\Psi}}}{\hat{\kappa}\hat{\nu}^\prime},\hat{\nu}^\prime)$, where $\hat{\nu}^\prime=\hat{\nu}-D+1$
+    - *posterior mode*: the MAP of $\boldsymbol{\mu}$ and $\boldsymbol{\Sigma}$ is the mode of NIW (lets say that our observations are rvs $\mathbf{Y}$): $p(\boldsymbol{\mu},\boldsymbol{\Sigma}\mid\mathbf{Y})=\operatorname{NIW}(\boldsymbol{\mu}=\boldsymbol{\hat{\mu}},\boldsymbol{\Sigma}\mid\boldsymbol{\hat{m}}=\boldsymbol{\hat{\mu}},\hat{\kappa},\hat{\nu},\boldsymbol{\hat{\Psi}})$, where $\boldsymbol{\hat{\mu}}$ is identical as the last NIW posterior (convex comb) and we can factorize $\boldsymbol{\Sigma}$ and obtain its estimate directly from the IW term: $\boldsymbol{\hat{\Sigma}}=\frac{1}{\hat{\nu}+D+2}\boldsymbol{\hat{\Psi}}$
+    - *posterior predictive*: following Sec.3.2.1.8 idea's $p(\boldsymbol{y} \mid \mathcal{D})=\int \text{rv-dist}\times\text{bayes-post} \;d\boldsymbol{\theta}$ ; but now rv-dist is MVN: $p(\boldsymbol{y}\mid\mathcal{D})=\int\mathcal{N}(\boldsymbol{x}\mid\boldsymbol{\mu},\boldsymbol{\Sigma})\operatorname{NIW}(\boldsymbol{\mu},\boldsymbol{\Sigma}\mid\boldsymbol{\hat{m}},\hat{\kappa},\hat{\nu},\boldsymbol{\hat{\Psi}})d\boldsymbol{\mu}d\boldsymbol{\Sigma}=\mathcal{T}\left(\boldsymbol{y}\mid\boldsymbol{\hat{m}},\frac{\boldsymbol{\hat{\Psi}}(\hat{\kappa}+1)}{\hat{\kappa}\hat{\nu}^\prime}, \hat{\nu}^\prime \right)$
     
 
 ### 3.4.5 The Exponential Family
 - In Sec.3.4.4 we've seen how conjugate priors simplify the computation of posteriors because they have the same functional form ($\rightarrow \mathcal{F}$ is **closed form** ie up to chang of vars). 
-- The only family that guarantees its likelihoods to have fixed-sized sufficient stats [$\rightarrow$ $p(\mathcal{D}\mid\vec{\theta})=p(\vec{s}(\mathcal{D})\mid\vec{\theta})$] is the *Exponential Family* (w/ few exceptions. eg Unif likelihood - Pareto prior & posterior)
+- The only family that guarantees its likelihoods to have fixed-sized sufficient stats [$\rightarrow$ $p(\mathcal{D}\mid\boldsymbol{\theta})=p(\boldsymbol{s}(\mathcal{D})\mid\boldsymbol{\theta})$] is the *Exponential Family* (w/ few exceptions. eg Unif likelihood - Pareto prior & posterior)
 
 #### 3.4.5.1 Likelihood
-- likelihood: $p(\mathcal{D}\mid\vec{\eta})=h(\mathcal{D})\exp\left(\vec{\eta}^\top\vec{s}(\mathcal{D})-N A(\vec{\eta})\right)$, where $\vec{s}(\mathcal{D})=\sum^N\vec{s}(\vec{x}_n)$ and $h(\mathcal{D})=\prod^Nh(\vec{x}_n)$
+- likelihood: $p(\mathcal{D}\mid\boldsymbol{\eta})=h(\mathcal{D})\exp\left(\boldsymbol{\eta}^\top\boldsymbol{s}(\mathcal{D})-N A(\boldsymbol{\eta})\right)$, where $\boldsymbol{s}(\mathcal{D})=\sum^N\boldsymbol{s}(\boldsymbol{x}_n)$ and $h(\mathcal{D})=\prod^Nh(\boldsymbol{x}_n)$
 
 #### 3.4.5.2 Prior
-- prior: $p(\vec{\eta}\mid\vec{\breve{\tau}},\breve{\nu})=\frac{1}{Z(\vec{\breve{\tau}},\breve{\nu})}\exp\left(\vec{\breve{\tau}}^\top\vec{\eta}-\breve{\nu}A(\vec{\eta})\right)$, where $\breve{\nu}$ is the strength of prior, $\vec{\breve{\tau}}/\breve{\nu}$ is prior mean and part func $Z$ is normalization factor
+- prior: $p(\boldsymbol{\eta}\mid\boldsymbol{\breve{\tau}},\breve{\nu})=\frac{1}{Z(\boldsymbol{\breve{\tau}},\breve{\nu})}\exp\left(\boldsymbol{\breve{\tau}}^\top\boldsymbol{\eta}-\breve{\nu}A(\boldsymbol{\eta})\right)$, where $\breve{\nu}$ is the strength of prior, $\boldsymbol{\breve{\tau}}/\breve{\nu}$ is prior mean and part func $Z$ is normalization factor
 
 #### 3.4.5.3 Posterior
-- posterior: $p(\vec{\eta}\mid\mathcal{D})=\frac{p(\mathcal{D}\mid\vec{\eta})p(\vec{\eta})}{p(\mathcal{D})}=\frac{1}{Z(\vec{\hat{\tau}},\hat{\nu})}\exp\left(\vec{\hat{\tau}}^\top\vec{\eta}-\hat{\nu}A(\vec{\eta})\right)$
-    - $\vec{\hat{\tau}}=\vec{\breve{\tau}}+\vec{s}(\mathcal{D})$
+- posterior: $p(\boldsymbol{\eta}\mid\mathcal{D})=\frac{p(\mathcal{D}\mid\boldsymbol{\eta})p(\boldsymbol{\eta})}{p(\mathcal{D})}=\frac{1}{Z(\boldsymbol{\hat{\tau}},\hat{\nu})}\exp\left(\boldsymbol{\hat{\tau}}^\top\boldsymbol{\eta}-\hat{\nu}A(\boldsymbol{\eta})\right)$
+    - $\boldsymbol{\hat{\tau}}=\boldsymbol{\breve{\tau}}+\boldsymbol{s}(\mathcal{D})$
     - $\hat{\nu}=\breve{\nu}+N$
-    - $Z(\vec{\hat{\tau}},\hat{\nu})=\frac{Z(\vec{\breve{\tau}},\breve{\nu})}{h(\mathcal{D})}p(\mathcal{D})$
+    - $Z(\boldsymbol{\hat{\tau}},\hat{\nu})=\frac{Z(\boldsymbol{\breve{\tau}},\breve{\nu})}{h(\mathcal{D})}p(\mathcal{D})$
 
 #### 3.4.5.4 Marginals
-- from the last eq: $p(\mathcal{D})=\frac{Z(\vec{\hat{\tau}},\hat{\nu})}{Z(\vec{\breve{\tau}},\breve{\nu})}h(\mathcal{D})$, a detailed example of how this is used in Sec.3.2.1.9
+- from the last eq: $p(\mathcal{D})=\frac{Z(\boldsymbol{\hat{\tau}},\hat{\nu})}{Z(\boldsymbol{\breve{\tau}},\breve{\nu})}h(\mathcal{D})$, a detailed example of how this is used in Sec.3.2.1.9
 
 #### 3.4.5.5 Predictive posterior
-- predictive density for future observables $\mathcal{D}^\prime=(\vec{\tilde{x}_1},\ldots,\vec{\tilde{x}}_{N^\prime})$ given past data $\mathcal{D}=(\vec{x_1},\ldots,\vec{x}_N)$: $p(\mathcal{D}^\prime\mid\mathcal{D})=\int \text{rv-dist}\times\text{bayes-post} \;d\vec{\eta}=\int p(\mathcal{D}^\prime\mid\vec{\eta})p(\vec{\eta}\mid\mathcal{D})d\vec{\eta}=h(\mathcal{D}^\prime)\frac{Z(\vec{\hat{\tau}}+\vec{s}(\mathcal{D}^\prime),\hat{\nu}+N^\prime)}{Z(\vec{\hat{\tau}},\hat{\nu})}$
+- predictive density for future observables $\mathcal{D}^\prime=(\boldsymbol{\tilde{x}_1},\ldots,\boldsymbol{\tilde{x}}_{N^\prime})$ given past data $\mathcal{D}=(\boldsymbol{x_1},\ldots,\boldsymbol{x}_N)$: $p(\mathcal{D}^\prime\mid\mathcal{D})=\int \text{rv-dist}\times\text{bayes-post} \;d\boldsymbol{\eta}=\int p(\mathcal{D}^\prime\mid\boldsymbol{\eta})p(\boldsymbol{\eta}\mid\mathcal{D})d\boldsymbol{\eta}=h(\mathcal{D}^\prime)\frac{Z(\boldsymbol{\hat{\tau}}+\boldsymbol{s}(\mathcal{D}^\prime),\hat{\nu}+N^\prime)}{Z(\boldsymbol{\hat{\tau}},\hat{\nu})}$
 
 #### 3.4.5.6 Example: Bernoulli distribution
 - See in book
@@ -359,7 +356,7 @@ Therefore $H_0$ is probably false
 
 #### 3.4.6.4 Priors for covariance matrices
 - Conjugate priors for covaraince matrices presents a difficulty in posing the priors in an uninformative way, eg. inverse Wishart has heavy tails 
-- One approach to this is to decompose the covariance matrix in terms of a product of of marginal stds and the corr matrix $\mathbf{R}$: $\vec{\Sigma}=\operatorname{diag}(\vec{\sigma})\mathbf{R}\operatorname{diag}(\vec{\sigma})$
+- One approach to this is to decompose the covariance matrix in terms of a product of of marginal stds and the corr matrix $\mathbf{R}$: $\boldsymbol{\Sigma}=\operatorname{diag}(\boldsymbol{\sigma})\mathbf{R}\operatorname{diag}(\boldsymbol{\sigma})$
 - On the other hand, a common choice for the *Correlation matrix prior* is a dist called the **LKJ**: $\operatorname{LKJ}(\mathbf{R}\mid\eta)\propto |\mathbf{R}|^{\eta-1}$
 - Or also its LKJ-Cholesky version: $\operatorname{LKJchol}(\mathbf{L}\mid\eta)\propto |\mathbf{L}|^{-\eta-1}$, with $\mathbf{R}=\mathbf{L}\mathbf{L}^\top$
 
@@ -376,7 +373,7 @@ Therefore $H_0$ is probably false
 
 ### 3.5.2 Jeffreys priors
 - **Jeffreys priors** are a type of priors that ensure the equivalence under certain parameterizations. 
-- It states that: $p(\vec{\theta})\propto\sqrt{\det\mathbf{F}(\vec{\theta})}$
+- It states that: $p(\boldsymbol{\theta})\propto\sqrt{\det\mathbf{F}(\boldsymbol{\theta})}$
     - eg. if in 1D we have a parameter $\theta$ and an alternative parameterization $\phi=\theta/(1-\theta)$, then we can show that $p_\phi(\phi)=p_\theta \left | \frac{d\theta}{d\phi} \right |=\sqrt{F(\phi)}$, Jeffreys prior is invariant to parametrization
 
 
@@ -388,10 +385,10 @@ Therefore $H_0$ is probably false
     - finally the Jeffrey prior in terms of the odds is: $p_\phi(\phi)\propto\phi^{-1/2}(1+\phi)^{-1}$
 
 #### 3.5.2.2 Jeffreys prior for multinomial distribution
-- For a $K$-state categorical dist, we have the Dirichlet dist: $p(\vec{\theta})\propto\operatorname{Dir}(\vec{\theta}\mid 1/2,\ldots, 1/2)$
+- For a $K$-state categorical dist, we have the Dirichlet dist: $p(\boldsymbol{\theta})\propto\operatorname{Dir}(\boldsymbol{\theta}\mid 1/2,\ldots, 1/2)$
 
 #### 3.5.2.3 Jeffreys prior for mean and variance of a univariate Gaussian
-- In the 1D Gaussian with unknown params $\mu, \sigma^2$, using the FIM from Sec.3.3.4.4 the Jeffrey prior is $\sqrt{\det(\mathbf{F}(\vec{\theta}))}=\frac{\sqrt{2}}{\sigma^3}$
+- In the 1D Gaussian with unknown params $\mu, \sigma^2$, using the FIM from Sec.3.3.4.4 the Jeffrey prior is $\sqrt{\det(\mathbf{F}(\boldsymbol{\theta}))}=\frac{\sqrt{2}}{\sigma^3}$
 - Furthermore, *standard uninformative Jeffreys priors* [[KW96](https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=75530d63b0286ff600738b45e648f0950f182530)] states that the prior can be written as a product of separate params: $p(\mu,\sigma^2)\propto p(\mu)p(\sigma^2)\propto\sigma^{-3}$
     - This is a favorable expression because it allows us to emulate this prior w/ the **NIX re-parameterization** of Sec.3.4.3.3
 
@@ -415,8 +412,8 @@ Therefore $H_0$ is probably false
 
 ### 3.5.4 Reference priors
 - The basic idea of a **reference prior** is a way to obtain uninformative priors using the prior that is the most dissimilar to all possible posteriors
-- In math this translates to the $p(\vec{\theta})$ that maximizes the expected **KL divergence** between prior & post: $p^\ast(\vec{\theta})=\operatorname{argmax}_{p^\ast(\vec{\theta})}\int_\mathcal{D}p(\mathcal{D})D_{\mathbb{KL}}(p(\vec{\theta}\mid\mathcal{D})\mid p(\vec{\theta}))d\mathcal{D}$
-- Usinf some tricks this turns up to be an expected value: $\mathbb{E}_{\vec{\theta}}\left[D_{\mathbb{KL}}(p(\mathcal{D}\mid\vec{\theta})\mid p(\mathcal{D}))\right]$
+- In math this translates to the $p(\boldsymbol{\theta})$ that maximizes the expected **KL divergence** between prior & post: $p^\ast(\boldsymbol{\theta})=\operatorname{argmax}_{p^\ast(\boldsymbol{\theta})}\int_\mathcal{D}p(\mathcal{D})D_{\mathbb{KL}}(p(\boldsymbol{\theta}\mid\mathcal{D})\mid p(\boldsymbol{\theta}))d\mathcal{D}$
+- Usinf some tricks this turns up to be an expected value: $\mathbb{E}_{\boldsymbol{\theta}}\left[D_{\mathbb{KL}}(p(\mathcal{D}\mid\boldsymbol{\theta})\mid p(\mathcal{D}))\right]$
     - in the 1D case the corresponding prior is equivalent to Jeffreys prior 
     - higher dimensions require to calculate the reference prior for one param at a time, using the chain rule. This is computationally unfeasible
     - a tractable approximation to accomplish the latter uses *variational inference* (Sec.10.1)
@@ -428,12 +425,12 @@ Therefore $H_0$ is probably false
 
 
 ## 3.6 Hierarchical priors
-- A **hierarchical Bayes model** computes the posterior-params $p(\vec{\theta}\mid\mathcal{D})$ when the prior's param dists $\vec{\theta}$ depend on other parameters (called **hyperparameters** $\vec{\xi}$) 
-    - the hierarchy goes like this: $\vec{\xi} \rightarrow \vec{\theta} \rightarrow \mathcal{D}$, higher level priors influence lower level priors
-    - if we assume a fixed prior on the hyperparams then we can compute the joint prob: $p(\vec{\xi},\vec{\theta},\mathcal{D})=p(\vec{\xi})p(\vec{\theta}\mid\vec{\xi})p(\mathcal{D}\mid\vec{\theta})$
-    - in reality most hierarchical Bayes don't have analytical solutions thus the numerical approximation rely on observed data, so we actually compute: $p(\vec{\xi},\vec{\theta},\mathcal{D}) \rightarrow p(\vec{\xi},\vec{\theta}\mid\mathcal{D})$
+- A **hierarchical Bayes model** computes the posterior-params $p(\boldsymbol{\theta}\mid\mathcal{D})$ when the prior's param dists $\boldsymbol{\theta}$ depend on other parameters (called **hyperparameters** $\boldsymbol{\xi}$) 
+    - the hierarchy goes like this: $\boldsymbol{\xi} \rightarrow \boldsymbol{\theta} \rightarrow \mathcal{D}$, higher level priors influence lower level priors
+    - if we assume a fixed prior on the hyperparams then we can compute the joint prob: $p(\boldsymbol{\xi},\boldsymbol{\theta},\mathcal{D})=p(\boldsymbol{\xi})p(\boldsymbol{\theta}\mid\boldsymbol{\xi})p(\mathcal{D}\mid\boldsymbol{\theta})$
+    - in reality most hierarchical Bayes don't have analytical solutions thus the numerical approximation rely on observed data, so we actually compute: $p(\boldsymbol{\xi},\boldsymbol{\theta},\mathcal{D}) \rightarrow p(\boldsymbol{\xi},\boldsymbol{\theta}\mid\mathcal{D})$
     - so we have different groups of obervations $\mathcal{D}_j, \mathcal{D}_k,\ldots\mathcal{D}_\ast$ that correspond to datasets where we believe that different hyperparameters command their behavior 
-- Once we know the prior joint dist we proceed to compute predictive posteriors: $p\left(y_* \mid \mathcal{D}\right)=\int p\left(y_* \mid \theta_*\right) p\left(\theta_* \mid \vec{\xi}\right) p(\vec{\xi} \mid \mathcal{D}) d \theta_* d \vec{\xi}$
+- Once we know the prior joint dist we proceed to compute predictive posteriors: $p\left(y_* \mid \mathcal{D}\right)=\int p\left(y_* \mid \theta_*\right) p\left(\theta_* \mid \boldsymbol{\xi}\right) p(\boldsymbol{\xi} \mid \mathcal{D}) d \theta_* d \boldsymbol{\xi}$
 - Lets explore examples (Binomial, Gaussian ) in the followig sub-sections, ref [[Gel+14a](http://www.stat.columbia.edu/~gelman/book/)]
 
 ### 3.6.1 Hierarchical binomial model
@@ -442,12 +439,12 @@ Therefore $H_0$ is probably false
     - **parameter typing** assumes that all $\theta_j$ are the same, then we can get a pooled MLE: $\hat{\theta}_{\text{pooled}}=\frac{\sum y_j}{\sum N_j}$ 
 - another solution that takes a less severe assumption than parameter-typing is assume $\theta_j$ are similar but can be group specific variations
     - this can be modeled by assuming that $\theta_j\sim\operatorname{Beta}(a,b)$
-    - where $\vec{\xi}=(a,b)$ from the pior joint dist: $p(\mathcal{D}, \vec{\theta}, \vec{\xi})=p(\vec{\xi}) p(\vec{\theta} \mid \vec{\xi}) p(\mathcal{D} \mid \vec{\theta})=p(\vec{\xi})\left[\prod_{j=1}^J \operatorname{Beta}\left(\theta_j \mid \vec{\xi}\right)\right]\left[\prod_{j=1}^J \operatorname{Bin}\left(y_j \mid N_j, \theta_j\right)\right]$
+    - where $\boldsymbol{\xi}=(a,b)$ from the pior joint dist: $p(\mathcal{D}, \boldsymbol{\theta}, \boldsymbol{\xi})=p(\boldsymbol{\xi}) p(\boldsymbol{\theta} \mid \boldsymbol{\xi}) p(\mathcal{D} \mid \boldsymbol{\theta})=p(\boldsymbol{\xi})\left[\prod_{j=1}^J \operatorname{Beta}\left(\theta_j \mid \boldsymbol{\xi}\right)\right]\left[\prod_{j=1}^J \operatorname{Bin}\left(y_j \mid N_j, \theta_j\right)\right]$
     
 
 #### 3.6.1.1 Posterior inference
 - Most hierarchical Bayes don't have analytical solutions thus numerical approximations use one of the most powerful methods: Hamiltonian Monte Carlo (HMC) method for Bayesian stats. Basically is a form of Markov Chain Monte Carlo (MCMC), see Sec.15.5
-    - the algorith generates samples in an unconstrained parameter space, see eq.(3.250). and computes a log-prior-joint $\log p(\mathcal{D},\vec{\omega})$, where $\vec{\omega}=(\vec{\tilde{\theta}}, \vec{\tilde{\xi}})$
+    - the algorith generates samples in an unconstrained parameter space, see eq.(3.250). and computes a log-prior-joint $\log p(\mathcal{D},\boldsymbol{\omega})$, where $\boldsymbol{\omega}=(\boldsymbol{\tilde{\theta}}, \boldsymbol{\tilde{\xi}})$
 
 
 #### 3.6.1.2 Example: the rats dataset 
@@ -460,7 +457,7 @@ Therefore $H_0$ is probably false
     - shared & fixed variance $y_{ij}\sim \mathcal{N}(\theta_j, \sigma^2)$ simplifies the framing as:
         - having one observation per group $y_j=\frac{1}{N_j}\sum_i^{N_j}y_{ij}$ w/ variance $\sigma_j^2=\frac{\sigma^2}{N_j}$
         - each group's likelihood is: $y_j\sim\mathcal{N}(\theta,\sigma_j^2)$ assuming $\sigma_j^2$'s are known 
-    - joint prior w/ $p(\mu)p(\tau^2)$ being some kind of prior over the (mean, variance)-hyperparams: $p(\mu,\tau^2, \vec{\theta}_{1:J}\mid\mathcal{D})\propto p(\mu)p(\tau^2)\prod_j\mathcal{N}(\theta_j\mid\mu,\tau^2)\mathcal{N}(y_j\mid\theta_j,\sigma_j^2)$
+    - joint prior w/ $p(\mu)p(\tau^2)$ being some kind of prior over the (mean, variance)-hyperparams: $p(\mu,\tau^2, \boldsymbol{\theta}_{1:J}\mid\mathcal{D})\propto p(\mu)p(\tau^2)\prod_j\mathcal{N}(\theta_j\mid\mu,\tau^2)\mathcal{N}(y_j\mid\theta_j,\sigma_j^2)$
 
 #### 3.6.2.1 Example: the eight schools dartaset
 - See Sec.5.2 in [[Gel+14a](http://www.stat.columbia.edu/~gelman/book/)]
@@ -475,27 +472,27 @@ Therefore $H_0$ is probably false
 - 
 
 ## 3.7 Empirical Bayes (EB)
-- EB is an approximation to calculate the parameters based on observed data (aka posterior inference $p(\vec{\theta}\mid\mathcal{D})$), because *Hierarchical Bayes* Sec.3.6 is computationally hard
-    - rather than the joint prosterior $p(\vec{\theta},\vec{\xi}\mid\mathcal{D})$ EB approximiates this by computing a point estimate $\vec{\hat{\xi}}$ and then obtaining a conditional posterior $p(\vec{\theta}\mid\vec{\hat{\xi}},\mathcal{D})=\frac{p(\mathcal{D}\mid\vec{\theta})p(\vec{\theta}\mid\vec{\xi})}{p(\mathcal{D}\mid\vec{\xi})}$
-        - prior (given hyperparams): $p(\vec{\theta}\mid\vec{\xi})$ 
-        - likelihood: $p(\mathcal{D}\mid\vec{\theta})$
-        - Marginal likelihood: $p(\mathcal{D}\mid\vec{\xi})$
+- EB is an approximation to calculate the parameters based on observed data (aka posterior inference $p(\boldsymbol{\theta}\mid\mathcal{D})$), because *Hierarchical Bayes* Sec.3.6 is computationally hard
+    - rather than the joint prosterior $p(\boldsymbol{\theta},\boldsymbol{\xi}\mid\mathcal{D})$ EB approximiates this by computing a point estimate $\boldsymbol{\hat{\xi}}$ and then obtaining a conditional posterior $p(\boldsymbol{\theta}\mid\boldsymbol{\hat{\xi}},\mathcal{D})=\frac{p(\mathcal{D}\mid\boldsymbol{\theta})p(\boldsymbol{\theta}\mid\boldsymbol{\xi})}{p(\mathcal{D}\mid\boldsymbol{\xi})}$
+        - prior (given hyperparams): $p(\boldsymbol{\theta}\mid\boldsymbol{\xi})$ 
+        - likelihood: $p(\mathcal{D}\mid\boldsymbol{\theta})$
+        - Marginal likelihood: $p(\mathcal{D}\mid\boldsymbol{\xi})$
     - One big caveat is that we are violating the principle of not picking priors independently from observed data when obtaining hyperparams, but this is the trade-off to obtain the EB approximation
 
 - A summary of what we've seen:
 | Method | Definition |
 |----------|----------|
-| Maximum likelihood | $$\vec{\hat{\theta}}=\operatorname{argmax}_{\vec{\theta}}p(\mathcal{D}\mid\vec{\theta})$$ |
-| MAP estimation | $$\vec{\hat{\theta}}=\operatorname{argmax}_{\vec{\theta}}p(\mathcal{D}\mid\vec{\theta})p(\vec{\theta}\mid\vec{\xi})$$ |
-| ML-II (Empirical Bayes) | $$\vec{\hat{\xi}}=\operatorname{argmax}_{\vec{\xi}}\int p(\mathcal{D}\mid\vec{\theta})p(\vec{\theta}\mid\vec{\xi})d\vec{\theta}$$ |
-| MAP-II | $$\vec{\hat{\xi}}=\operatorname{argmax}_{\vec{\xi}}\int p(\mathcal{D}\mid\vec{\theta})p(\vec{\theta}\mid\vec{\xi})p(\vec{\xi})d\vec{\theta}$$ |
-| Full Bayes (analytical) | $$p(\vec{\theta},\vec{\xi},\mathcal{D})= p(\mathcal{D}\mid\vec{\theta})p(\vec{\theta}\mid\vec{\xi})p(\vec{\xi})$$ |
-| Full Bayes (num approx) | $$p(\vec{\theta},\vec{\xi}\mid\mathcal{D})\propto p(\mathcal{D}\mid\vec{\theta})p(\vec{\theta}\mid\vec{\xi})p(\vec{\xi})$$ |
+| Maximum likelihood | $$\boldsymbol{\hat{\theta}}=\operatorname{argmax}_{\boldsymbol{\theta}}p(\mathcal{D}\mid\boldsymbol{\theta})$$ |
+| MAP estimation | $$\boldsymbol{\hat{\theta}}=\operatorname{argmax}_{\boldsymbol{\theta}}p(\mathcal{D}\mid\boldsymbol{\theta})p(\boldsymbol{\theta}\mid\boldsymbol{\xi})$$ |
+| ML-II (Empirical Bayes) | $$\boldsymbol{\hat{\xi}}=\operatorname{argmax}_{\boldsymbol{\xi}}\int p(\mathcal{D}\mid\boldsymbol{\theta})p(\boldsymbol{\theta}\mid\boldsymbol{\xi})d\boldsymbol{\theta}$$ |
+| MAP-II | $$\boldsymbol{\hat{\xi}}=\operatorname{argmax}_{\boldsymbol{\xi}}\int p(\mathcal{D}\mid\boldsymbol{\theta})p(\boldsymbol{\theta}\mid\boldsymbol{\xi})p(\boldsymbol{\xi})d\boldsymbol{\theta}$$ |
+| Full Bayes (analytical) | $$p(\boldsymbol{\theta},\boldsymbol{\xi},\mathcal{D})= p(\mathcal{D}\mid\boldsymbol{\theta})p(\boldsymbol{\theta}\mid\boldsymbol{\xi})p(\boldsymbol{\xi})$$ |
+| Full Bayes (num approx) | $$p(\boldsymbol{\theta},\boldsymbol{\xi}\mid\mathcal{D})\propto p(\mathcal{D}\mid\boldsymbol{\theta})p(\boldsymbol{\theta}\mid\boldsymbol{\xi})p(\boldsymbol{\xi})$$ |
 
 
 ### 3.7.1 EB for the hierarchical binomial model
 - We'll see the EB approx to the hierarchical binomial model Sec.3.6.1
-    - we can maximize the marginal likelihood $p(\mathcal{D}\mid\vec{\xi})$ analytically by integrating out all the $\theta_j$ wrt $\vec{\hat{\xi}}=(\hat{a},\hat{b})$, eq(3.261-3.263)
+    - we can maximize the marginal likelihood $p(\mathcal{D}\mid\boldsymbol{\xi})$ analytically by integrating out all the $\theta_j$ wrt $\boldsymbol{\hat{\xi}}=(\hat{a},\hat{b})$, eq(3.261-3.263)
     - finally compute the cond posterior for each group $j$: $p(\theta_j\mid\hat{a},\hat{b},\mathcal{D})$
 
 
@@ -513,7 +510,7 @@ Therefore $H_0$ is probably false
     - this is not very realistic
 - We'll discuss three progressively better treatments:
     - **deleted interpolation** [[CG96](https://www.sciencedirect.com/science/article/abs/pii/S0885230899901286)]- a smoothing technique that defines the transition matrix as a convex combination of bigram $f_{jk}$ and unigram $f_k$ frequencies: $A_{jk}=(1-\lambda)f_{jk}+\lambda f_k$, where $\lambda$ is set by cross-vaalidation
-    - **backoff smoothing** [[MP95](https://www.cambridge.org/core/journals/natural-language-engineering/article/abs/hierarchical-dirichlet-language-model/07CB63E866B2386854A1CA5BAA30055D)]- if the frequency $f_{jk}$ is low then we revert to $f_k$, so we assign a *Dirichlet* dist to each row $j$: $\mathbf{A}_j\sim \operatorname{Dir}(\alpha_0 \vec{m})=\operatorname{Dir}(\vec{\alpha})$, where the param vectors $\vec{\alpha}$  represents each row of $\mathbf{A}$. In previous notation $\vec{\theta}_j=\mathbf{A}_j$ and $\vec{\xi}=(\alpha,\vec{m})$. Finally the posterior is: $p(X_{t+1}=k\mid X_t=j, \mathcal{D})=(1-\lambda_j)f_{jk}+\lambda_j m_k$ and marginal likelihood $p(\mathcal{D}\mid\vec{\alpha})=\prod_j B(\mathbf{N}_j+\vec{\alpha})/B(\vec{\alpha})$
+    - **backoff smoothing** [[MP95](https://www.cambridge.org/core/journals/natural-language-engineering/article/abs/hierarchical-dirichlet-language-model/07CB63E866B2386854A1CA5BAA30055D)]- if the frequency $f_{jk}$ is low then we revert to $f_k$, so we assign a *Dirichlet* dist to each row $j$: $\mathbf{A}_j\sim \operatorname{Dir}(\alpha_0 \boldsymbol{m})=\operatorname{Dir}(\boldsymbol{\alpha})$, where the param vectors $\boldsymbol{\alpha}$  represents each row of $\mathbf{A}$. In previous notation $\boldsymbol{\theta}_j=\mathbf{A}_j$ and $\boldsymbol{\xi}=(\alpha,\boldsymbol{m})$. Finally the posterior is: $p(X_{t+1}=k\mid X_t=j, \mathcal{D})=(1-\lambda_j)f_{jk}+\lambda_j m_k$ and marginal likelihood $p(\mathcal{D}\mid\boldsymbol{\alpha})=\prod_j B(\mathbf{N}_j+\boldsymbol{\alpha})/B(\boldsymbol{\alpha})$
     - **interpolated Kneser-Ney** - more sophisticated model that improves *backoff* heuristics are superior
     - RNNs offer even more superior performance because they don't treat each token atomically but rather treat them as an embedded representation
 
@@ -525,7 +522,7 @@ Therefore $H_0$ is probably false
 ### 3.8.1 Bayesian model selection
 - Since Bayes treats everything as a rv we can apply Bayes rule on the set of models: $p(m\mid\mathcal{D})=\frac{p(\mathcal{D}\mid m)p(m)}{\sum_{m}p(m)p(\mathcal{D}\mid m)}$
     - The MAP maximizes the likelihood: $\hat{m}_{\text{map}}=\operatorname{argmax}_{m}p(m\mid\mathcal{D})$
-    - the marginal likelihood for each model is: $p(\mathcal{D}\mid m)=\int p(\mathcal{D}\mid\vec{\theta},m)p(\vec{\theta}\mid m)d\vec{\theta}$
+    - the marginal likelihood for each model is: $p(\mathcal{D}\mid m)=\int p(\mathcal{D}\mid\boldsymbol{\theta},m)p(\boldsymbol{\theta}\mid m)d\boldsymbol{\theta}$
     - **Bayesian Occam's razor** - so far in the field more data is always better, but infinite data may not be necessary. This eludes to Occam's razor principle of parsimony ie. there can be a finite amount of data thats enough for building a parsimonious model.
     
     
@@ -540,7 +537,7 @@ Therefore $H_0$ is probably false
 
 ### 3.8.3 Estimating the marginal likelihood
 - Marginal likelihood aka. **evidence**
-- To perform Bayes model selection or averaging we need the marginal likelihood: $p(\mathcal{D}\mid m)=\int p(\mathcal{D}\mid\vec{\theta},m)p(\vec{\theta}\mid m)d\vec{\theta}$
+- To perform Bayes model selection or averaging we need the marginal likelihood: $p(\mathcal{D}\mid m)=\int p(\mathcal{D}\mid\boldsymbol{\theta},m)p(\boldsymbol{\theta}\mid m)d\boldsymbol{\theta}$
 - The following sub-sections give some notion on this
 
 
@@ -560,15 +557,15 @@ Therefore $H_0$ is probably false
 
 
 #### 3.8.3.4 Variational Bayes
-- (Secc.10.3.3) variational method to compute evidence/marginal-likelihood. Optimizes the *evidence lower-bound* $\log q(\mathcal{D}\mid\vec{\theta})$ to get a posterior approx $p(\vec{\theta}\mid\mathcal{D})$ and then approx the evidence/marg-likelihhod
+- (Secc.10.3.3) variational method to compute evidence/marginal-likelihood. Optimizes the *evidence lower-bound* $\log q(\mathcal{D}\mid\boldsymbol{\theta})$ to get a posterior approx $p(\boldsymbol{\theta}\mid\mathcal{D})$ and then approx the evidence/marg-likelihhod
 
 
 ### 3.8.4 Connection between cross validation and marginal likelihood
 - We can draw parallels between the frequentist cross-validation and Bayes model selection
     - frequentist CV - splits $K$ validation subsets, then use $K-1$ in training and the $K$-th one for testing
     - Bayes model selection offers two similar flavors close to this concept:
-        - **leave-one-out CV (LOO-CV)** sets each measurement $K=N$ such that: $p_{\text{LOO}}(m)=\sum_{n}^{N}\log{p(\mathcal{D}_{n}\mid\hat{\vec{\theta}}(\mathcal{D}_{-n}),m)}$, where the $\hat{\vec{\theta}}(\mathcal{D}_{-n})$ is the estimate when we ommit the $n$-th measurement (see Sec.3.8.6)
-        - **log evidence/marg-likelihood** is yields a similar expresion to LOO. Where, from $\operatorname{LML}(m)=\log{p(\mathcal{D}\mid m)}$, then using a point esimate ($\delta(\vec{\theta}-\hat{\vec{\theta}}(\mathcal{D}_{1:n-1})$) LML simplifies to: $\log p(\mathcal{D} \mid m) \approx \sum_{n=1}^N \log p\left(\mathcal{D}_n \mid \hat{\vec{\theta}}\left(\mathcal{D}_{1: n-1}\right), m\right)$, w/ the difference that this is evaulated sequentially $(\mathcal{D}_{1: n-1})$
+        - **leave-one-out CV (LOO-CV)** sets each measurement $K=N$ such that: $p_{\text{LOO}}(m)=\sum_{n}^{N}\log{p(\mathcal{D}_{n}\mid\hat{\boldsymbol{\theta}}(\mathcal{D}_{-n}),m)}$, where the $\hat{\boldsymbol{\theta}}(\mathcal{D}_{-n})$ is the estimate when we ommit the $n$-th measurement (see Sec.3.8.6)
+        - **log evidence/marg-likelihood** is yields a similar expresion to LOO. Where, from $\operatorname{LML}(m)=\log{p(\mathcal{D}\mid m)}$, then using a point esimate ($\delta(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}(\mathcal{D}_{1:n-1})$) LML simplifies to: $\log p(\mathcal{D} \mid m) \approx \sum_{n=1}^N \log p\left(\mathcal{D}_n \mid \hat{\boldsymbol{\theta}}\left(\mathcal{D}_{1: n-1}\right), m\right)$, w/ the difference that this is evaulated sequentially $(\mathcal{D}_{1: n-1})$
 - However, both methods have the problem that because the prior is weak, they overfit for the early training folds and can't generalize well for the latter points
 
 ### 3.8.5 Conditional marginal likelihood
@@ -580,7 +577,7 @@ Therefore $H_0$ is probably false
     - defined as: $\operatorname{CLML}(m)=\sum_{n=K}^{N}\log{p(\mathcal{D}_{n}\mid\mathcal{D}_{1:n-1},m)}$
     - where $K$ is a parameter to the algorithm (if we set $K=N-1$, we are back to the LOO estimate)
     - CLML generalizes better and is less sensitive to prior hparams
-    - is straightforward to 'Monte-Carlo'-estimate the integral, sampling from the posterior $p(\vec{\theta}\mid\mathcal{D}_{<n})$
+    - is straightforward to 'Monte-Carlo'-estimate the integral, sampling from the posterior $p(\boldsymbol{\theta}\mid\mathcal{D}_{<n})$
 
 
 
@@ -590,7 +587,7 @@ Therefore $H_0$ is probably false
 
 
 ### 3.8.7 Information criteria
-- An alternative to cross-validation for model selection is to score models based on the negative log-likelihood (NLL) PLUS some criteria (represented as complexity terms $C(m)$): $\mathcal{L}(m)=-\log{p(\mathcal{D}\mid\hat{\vec{\theta}},m)}+C(m)$
+- An alternative to cross-validation for model selection is to score models based on the negative log-likelihood (NLL) PLUS some criteria (represented as complexity terms $C(m)$): $\mathcal{L}(m)=-\log{p(\mathcal{D}\mid\hat{\boldsymbol{\theta}},m)}+C(m)$
     - see more [[GHV14](https://arxiv.org/pdf/1307.5928.pdf)]
 
 
