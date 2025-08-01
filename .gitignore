@@ -1,6 +1,17 @@
 # igonre all .* files except .gitignore
 .*
-book2-probml.pdf
+
+# Python  byproducts
+__pycache__/
+test*.ipynb
 .ipynb_checkpoints
 
-test.py
+*.parquet
+*.map
+*.zip
+*.gz
+*.tar
+*.tgz
+
+# ignore specific files
+probml-book2.pdf
